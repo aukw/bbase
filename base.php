@@ -9,6 +9,7 @@
 include_once $_SERVER['DOCUMENT_ROOT'].'/config.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/util.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/medoo/medoo.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/jwt.php';
 
 class Base
 {
@@ -18,6 +19,10 @@ class Base
         ;
     }
     
+	/**
+	 * 初始化数据库
+	 * @return \medoo
+	 */
     private function initDB()
     {
         $dbconfig = array(
