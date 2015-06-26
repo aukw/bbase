@@ -8,6 +8,8 @@ PHP框架：Flight(REST)
 
 数据库：Medoo(Mysql)
 
+用户验证：PHP-JWT
+
 
 #文件说明
 
@@ -27,3 +29,4 @@ util.php 工具类
 
 [Medoo](http://medoo.lvtao.net/)
 
+[PHP-JWT](https://github.com/firebase/php-jwt)
