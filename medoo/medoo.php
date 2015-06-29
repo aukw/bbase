@@ -7,7 +7,6 @@
  * Copyright 2015, Angel Lai
  * Released under the MIT license
  */
-use \App\Medoo;
 
 class medoo
 {

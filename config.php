@@ -14,8 +14,8 @@ class Config
     
     public static $mysql_hostname = 'localhost';
     public static $mysql_username = 'root';
-    public static $mysql_password = '';
-    public static $mysql_database = 'bb';
+    public static $mysql_password = 'root';
+    public static $mysql_database = 'bbase';
     public static $mysql_tablepre = 'bb_';
 }
 

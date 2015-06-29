@@ -28,17 +28,29 @@
  * 
  */
 
-class Test
+include_once $_SERVER['DOCUMENT_ROOT'].'/controllers/BaseController.php';
+
+class TestController extends BaseController
 {
 	
 	public function __construct() {
-		echo "i am here";
+		parent::__construct($parm1, $parm2, $parm3);
+		echo "load parent construct";
 		;
 	}
 	
-	public function ttt()
+	public function testGet()
 	{
-		return "this is a test";
+		$parm  = $_GET['parm'];
+		echo 'parm: '.$parm.' ! ';
+		return "test for method: GET";
+	}
+	
+	public function testPost()
+	{
+		$parm  = $_POST['parm'];
+		echo 'parm: '.$parm.' ! ';
+		return "test for method: POST";
 	}
 }
 ?>
