@@ -1,6 +1,7 @@
 <?php
 class View
 {
+  public static $parm;
   	function __construct()
     {
 
@@ -8,21 +9,26 @@ class View
 
     public static function load($viewFileName, $parmValue)
     {
+      self::$parm = $parmValue;
       foreach ($parmValue as $key => $value) {
         $$key = $value;
       }
       $template = './views/'.$viewFileName.'.html';
       if(file_exists($template))
       {
-        return include_once './views/'.$viewFileName.'.html';
+         include_once './views/'.$viewFileName.'.html';
       }else{
-        return 'Template File Not Found!';
+        echo  'Template File Not Found!';
       }
     }
 
     public static function blade($bladeFileName)
     {
-      return include_once './views/blade/'.'$bladeFileName.'.html';
+
+      foreach (self::$parm as $key => $value) {
+        $$key = $value;
+      }
+       include_once './views/blades/'.$bladeFileName.'.blade.html';
     }
 
 }
