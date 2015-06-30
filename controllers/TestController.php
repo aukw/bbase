@@ -25,32 +25,40 @@
  *  @todo指明应该改进或没有实现的地方
  *  @var定义说明变量/属性。
  *  @version定义版本信息
- * 
+ *
  */
 
 include_once $_SERVER['DOCUMENT_ROOT'].'/controllers/BaseController.php';
 
 class TestController extends BaseController
 {
-	
+
 	public function __construct() {
 		parent::__construct($parm1, $parm2, $parm3);
 		echo "load parent construct";
 		;
 	}
-	
+
 	public function testGet()
 	{
 		$parm  = $_GET['parm'];
 		echo 'parm: '.$parm.' ! ';
 		return "test for method: GET";
 	}
-	
+
 	public function testPost()
 	{
 		$parm  = $_POST['parm'];
 		echo 'parm: '.$parm.' ! ';
 		return "test for method: POST";
+	}
+
+	public function testTemplate()
+	{
+		$parm = array(
+			'testvar' => 'SO LONG, PHP'
+		);
+		View::load('test', $parm);
 	}
 }
 ?>

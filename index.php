@@ -6,6 +6,7 @@ require 'flight/Flight.php';
 
 Flight::route('/', function(){    echo 'hello world!';});
 Flight::route('GET /test', function(){router('TestController', 'testGet');});
+Flight::route('GET /testt', function(){router('TestController', 'testTemplate');});
 
 Flight::start();
 
