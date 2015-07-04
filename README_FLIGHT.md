@@ -1,6 +1,6 @@
 # What is Flight?
 
-Flight is a fast, simple, extensible framework for PHP. Flight enables you to 
+Flight is a fast, simple, extensible framework for PHP. Flight enables you to
 quickly and easily build RESTful web applications.
 
 ```php
@@ -33,7 +33,7 @@ If you're using [Composer](https://getcomposer.org/), you can run the following 
 composer require mikecao/flight
 ```
 
-OR you can [download](https://github.com/mikecao/flight/archive/master.zip) them directly 
+OR you can [download](https://github.com/mikecao/flight/archive/master.zip) them directly
 and extract them to your web directory.
 
 2\. Configure your webserver.

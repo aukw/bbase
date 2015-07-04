@@ -24,7 +24,6 @@ class View
 
     public static function blade($bladeFileName)
     {
-
       foreach (self::$parm as $key => $value) {
         $$key = $value;
       }
