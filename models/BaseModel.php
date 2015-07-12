@@ -11,9 +11,28 @@ include_once $_SERVER['DOCUMENT_ROOT'].'/base.php';
 class BaseModel extends Base
 {
     public $_DB_TABLE_NAME;
+    public $_MODEL;
     public function __construct() {
         parent::__construct();
     }
+    
+    function getModelKeys()
+    {
+        return $this->_MODEL;
+    }
+    
+    
+    function getModel($data)
+    {
+        $model = array();
+        $modelkeys = $this->_MODEL;
+        foreach($modelkeys as $modelkey)
+        {
+            $model[$modelkey] = $data[$modelkey];
+        }
+        return $model;
+    }
+    
     public function insert($parm)
     {
         $id = $this->db->insert($this->getTableName(), $parm);
