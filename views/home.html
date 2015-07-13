@@ -7,15 +7,14 @@ View::blade('head');
 			<header id="header">
 				<div class="content">
 					<h1><a href="#">阅 思 享</a></h1>
-					<p>读书<br />
-						读好书</p>
+					<p>读一本好书</p>
 					<ul class="actions">
 						<li><a id="share" href="#modal-share" role="button" data-toggle="modal" class="button special icon fa-download">分享我的书</a></li>
 						
 						<li><a href="#read" class="button icon fa-chevron-down scrolly">看别人的书</a></li>
 					</ul>
 				</div>
-				<div class="image phone">
+			    <div class="image phone" style="min-width: 280px;">
 					<div class="inner" style="font-size: 16px;">
 &nbsp;从明天起，做一个幸福的人<br>
 &nbsp;喂马、劈柴，周游世界<br>
@@ -33,8 +32,8 @@ View::blade('head');
 &nbsp;我只愿面朝大海，春暖花开
 					</div></div>
 			</header>
-
 		<!-- One -->
+		<!--
 			<section id="read" class="wrapper style2 special">
 				<header class="major">
 					<h2>Sed ipsum magna lorem tempus amet<br />
@@ -46,15 +45,18 @@ View::blade('head');
 					<li><span class="icon fa-cloud"><span class="label">Upload</span></span></li>
 				</ul>
 			</section>
-
+		-->
 		<!-- Two -->
 			<section id="two" class="wrapper">
 				<div class="inner alt">
 					<section class="spotlight">
 						<div class="image"><img src="./images/pic01.jpg" alt="" /></div>
 						<div class="content">
-							<h3>Magna sed ultrices</h3>
-							<p>Morbi mattis ornare ornare. Duis quam turpis, gravida at leo elementum elit fusce accumsan dui libero, quis vehicula lectus ultricies eu. In convallis amet leo non sapien iaculis efficitur consequat lorem ipsum.</p>
+							<h3>我是文章的标题</h3>
+							<p>
+							    我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容
+							</p>
+							<button type="button" class="btn btn-warning">查看全文</button>
 						</div>
 					</section>
 					<section class="spotlight">
@@ -456,7 +458,8 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 				
 					<div class="control-group">
 						<div class="controls">
-							 <button id="inputLogin" type="button" class="btn">登录</button>
+						    <button id="inputLogin" type="button" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;登录&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+							 <button id="inputRegister" type="button" class="btn btn-default align-right" style="float: right;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注册&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
 						</div>
 					</div>
 			</form>
@@ -491,6 +494,12 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 								success: function (data) {
 									// Play with returned data in JSON format
 									alert(data);
+									if(data.substr(0,1) != 0)
+									{
+									    alert(data.substr(1));
+									}else{
+									    
+									}
 								},
 								error: function (msg) {
 									alert(msg);

@@ -24,6 +24,7 @@ class UserModel extends BaseModel
 	
 	function register($mobile, $password, $name='', $email='')
 	{
+                $name = $mobile;
 		$user = array(
 			'mobile' => $mobile,
 			'password' => md5($password),
@@ -33,7 +34,6 @@ class UserModel extends BaseModel
 			'updated_at' => time(),
 			);
 		$insert = $this->insert($user);
-		var_dump($this->db->error());
 		return $insert;
 	}
 	

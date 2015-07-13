@@ -1,0 +1,52 @@
+
+<!--
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
+
+function login_info()
+{
+	var un = document.loginform.username.value;
+	if(un.length<1)
+	{
+		alert("用户名不能为空!");
+		loginform.username.focus();
+		return false;
+	}
+	var pw = document.loginform.password.value;
+	if(pw.length<1)
+	{
+		alert("密码不能为空!");
+		loginform.username.focus();
+		return false;
+	}
+	var sign = document.loginform.imageSign.value;
+	if (sign.length<1) {
+		alert("校验码不能为空!");
+		loginform.imageSign.focus();
+		return false;
+	}
+
+	var pg = "-1";
+	if(un=="guest"){
+		pg = "0";
+	}
+	if(document.loginform.check_login.checked)
+	{
+		document.loginform.action="https://xfz.jxufe.edu.cn/portal/login.xsp/action/Login/page/" + pg;//xfz.jxufe.edu.cn
+	}else
+	{
+//		document.loginform.action="/portal/login.xsp/action/Login/page/" + pg;
+		document.loginform.action="/portal/sso/login";
+	}
+	if(document.loginform.check_type.checked)
+	{
+		document.loginform.check_type.value="check_alias";
+	}else
+	{
+		document.loginform.check_type.value="check_normal";
+	}
+	//document.loginform.submit();
+	return true;
+}
+//-->
