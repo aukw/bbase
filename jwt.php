@@ -32,33 +32,29 @@ include_once $_SERVER['DOCUMENT_ROOT'].'/jwt/Authentication/JWT.php';
 
 class JWTAuth
 {
-	private static $token;
-	private static $key;
-	private static $alg;
+	private static $token = array(
+			'iss' => 'http://www.readthinkshare.com',
+			'aud' => 'http://www.readthinkshare.com',
+		);
+	private static $key = 'secretkey';
 	
 	public function __construct() 
 	{
-		$this->token = array(
-			'iss' => 'http://github.com/chenbrooks/bbase',
-			'aud' => 'http://github.com/chenbrooks/bbase',
-			'iat' => time(),
-			'nbf' => time()
-		);
-		$this->key = 'secretkey';
-		$this->alg = array('HS256');
+		self::$token = 
 		JWT::$leeway = 60;
 	}
 	
 	public static function setToken($user)
 	{
-		$token = array_merge($user, $this->token);
-		return JWT::encode($token, $this->key);
+		$token = array_merge($user, self::$token, array('iat'=>time(), 'nbf'=>time()));
+		$seed = JWT::encode($token, self::$key);
+		return $seed;
 	}
 	
 	public static function getToken($token)
 	{
-		$decoded = (array) JWT::decode($token, $this->key, array('HS256'));
-		foreach(array_keys($this->token) as $itemkey)
+		$decoded = (array) JWT::decode($token, self::$key, array('HS256'));
+		foreach(array_keys(self::$token) as $itemkey)
 		{
 			unset($decoded[$itemkey]);
 		}

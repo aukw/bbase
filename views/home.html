@@ -1,17 +1,16 @@
 <?php 
 View::blade('head');
 ?>
-
 	<body id="top">
 		<!-- Header -->
 			<header id="header">
 				<div class="content">
 					<h1><a href="#">阅 思 享</a></h1>
-					<p>读一本好书</p>
+					<p>读一本好书<?php echo $login; ?></p>
 					<ul class="actions">
-						<li><a id="share" href="#modal-share" role="button" data-toggle="modal" class="button special icon fa-download">分享我的书</a></li>
+						<li><a id="share" href="#modal-share" role="button" data-toggle="modal" class="button special icon fa-sign-in">分享我的书</a></li>
 						
-						<li><a href="#read" class="button icon fa-chevron-down scrolly">看别人的书</a></li>
+						<li><a id="think" href="#read" class="button icon fa-chevron-down scrolly">看别人的书</a></li>
 					</ul>
 				</div>
 			    <div class="image phone" style="min-width: 280px;">
@@ -33,19 +32,21 @@ View::blade('head');
 					</div></div>
 			</header>
 		<!-- One -->
-		<!--
 			<section id="read" class="wrapper style2 special">
 				<header class="major">
-					<h2>Sed ipsum magna lorem tempus amet<br />
-					vehicula et gravida elementum</h2>
+					<h2>我打一个呵欠，点起一支纸烟，喷出烟来，
+						对着灯默默地敬奠这些苍翠精致的英雄们。</h2>
+					<h5 id="author-name">鲁迅</h5>
 				</header>
-				<ul class="icons major">
-					<li><span class="icon fa-camera-retro"><span class="label">Shoot</span></span></li>
-					<li><span class="icon fa-refresh"><span class="label">Process</span></span></li>
-					<li><span class="icon fa-cloud"><span class="label">Upload</span></span></li>
+				<ul class="icons major" id="author-action" style="display:none;">
+					<li>
+						<a href="/review/create"><span class="icon fa-pencil"><span class="label">发表</span></span></a>
+					</li>
+					<li>
+						<a href="#"><span class="icon fa-sign-out" id='inputLogout'><span class="label">登出</span></span></a>
+					</li>
 				</ul>
 			</section>
-		-->
 		<!-- Two -->
 			<section id="two" class="wrapper">
 				<div class="inner alt">
@@ -56,7 +57,7 @@ View::blade('head');
 							<p>
 							    我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容我是文章的内容
 							</p>
-							<button type="button" class="btn btn-warning">查看全文</button>
+							<button type="button" class="button small">查看全文</button>
 						</div>
 					</section>
 					<section class="spotlight">
@@ -99,7 +100,6 @@ View::blade('head');
 			</section>
 
 		<!-- Four -->
-		<!--
 			<section id="four" class="wrapper">
 				<div class="inner">
 
@@ -417,7 +417,6 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 
 				</div>
 			</section>
-		-->
 
 		<!-- Footer -->
 			<footer id="footer">
@@ -458,14 +457,14 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 				
 					<div class="control-group">
 						<div class="controls">
-						    <button id="inputLogin" type="button" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;登录&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
-							 <button id="inputRegister" type="button" class="btn btn-default align-right" style="float: right;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注册&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+						    <button id="inputLogin" type="button" class="button special">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;登录&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+							 <button id="inputRegister" type="button" class="button " style="float: right;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注册&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
 						</div>
 					</div>
 			</form>
 			</div>
 			<div class="modal-footer">
-				<button id="inputLogin" type="button" class="btn btn-default" data-dismiss="modal">
+				<button id="inputCancel" type="button" class="button" data-dismiss="modal">
 					取消
 				</button> 
 			</div>
@@ -488,24 +487,43 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 					var mobile = $('#inputMobile').val();
 					var password = $('#inputPassword').val();
 					$.ajax({
-								type: "POST",
-								url: "/auth/login",
-								data: "mobile="+mobile+"&password="+password,
-								success: function (data) {
-									// Play with returned data in JSON format
-									alert(data);
-									if(data.substr(0,1) != 0)
-									{
-									    alert(data.substr(1));
-									}else{
-									    
-									}
-								},
-								error: function (msg) {
-									alert(msg);
-								}
-							});
+						type: "POST",
+						url: "/auth/login",
+						data: "mobile="+mobile+"&password="+password,
+						success: function (data) {
+							// Play with returned data in JSON format
+							if(data.substring(0,1) != "0")
+							{
+								alert(data.substring(1));
+							}else{
+								var author = data.split(':');
+								//window.location.reload();
+								$.cookie("token",author[2], { expires: 1});
+								$('#inputCancel').trigger('click');
+								$('#think').trigger('click');
+								$('#author-name').html(author[1]);
+								$('#author-action').css('display','block');
+							}
+						},
+						error: function (msg) {
+							alert(msg);
+						}
+					});
 				});
+				$('#inputLogout').click(function(){
+					$.cookie("token",'');
+					$('#author-name').html('鲁迅');
+					$('#author-action').css('display','none');
+				});
+				<?php
+					if($login){
+				?>
+						
+						$('#author-name').html("<?php echo $author['name']?>");
+						$('#author-action').css('display','block');
+				<?php
+					}
+				?>
 				</script>
 	</body>
 <?

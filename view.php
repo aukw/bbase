@@ -9,7 +9,7 @@ class View
 
     public static function load($viewFileName, $parmValue)
     {
-      self::$parm = $parmValue;
+      self::$parm = array_merge(self::$parm, $parmValue);
       foreach ($parmValue as $key => $value) {
         $$key = $value;
       }
@@ -29,6 +29,11 @@ class View
       }
        include_once './views/blades/'.$bladeFileName.'.blade.html';
     }
+	
+	public static function share($parmValue)
+	{
+		self::$parm = array_merge(self::$parm, $parmValue);
+	}
 
 }
 

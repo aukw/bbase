@@ -38,8 +38,11 @@ class HomeController extends BaseController
 	
 	public function index()
 	{
+		
 		$parmValue = array(
-			'title' => 'Leader EDU'
+			'title' => 'Leader EDU',
+			'login' => $this->login,
+			'author' => $this->author
 		);
 		return View::load('home', $parmValue);
 	}

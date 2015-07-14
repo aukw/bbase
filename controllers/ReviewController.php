@@ -30,44 +30,20 @@
 
 
 include_once $_SERVER['DOCUMENT_ROOT'].'/controllers/BaseController.php';
-include_once $_SERVER['DOCUMENT_ROOT'].'/models/UserModel.php';
 
-class UserController extends BaseController
+class ReviewController extends BaseController
 {
-	public $usermobel;
 	public function __construct($parm1, $parm2, $parm3) {
 		parent::__construct($parm1, $parm2, $parm3);
-		$this->usermobel = new UserModel();
-		
 	}
 	
-	public function register()
+	public function create()
 	{
-		$mobile = $_POST['mobile'];
-		$name = $_POST['name'];
-		$password = $_POST['password'];
-		$email = $_POST['email'];
-		return $this->usermobel->register($mobile, $password, $name, $email);		
-	}
-	
-	public function login()
-	{
-		$mobile = $_POST['mobile'];
-		$password = $_POST['password'];
-		$user = $this->usermobel->login($mobile, $password);
-		if($user){
-			$seed = array(
-				'mobile' => $mobile,
-				'password' => $password
-			);
-			$token = JWTAuth::setToken($seed);
-			//var_dump($token);
-			$name = $user['name']?$user['name']:$mobile;
-			return '0:'.$name.':'.$token;
-		}else{
-			return '1:登录失败';
-		}
-
+		$parmValue = array(
+			'author' => $this->author,
+			'login' => $this->login
+		);
+		return View::load('review', $parmValue);
 	}
 }
 ?>
