@@ -10,6 +10,7 @@ include_once $_SERVER['DOCUMENT_ROOT'].'/config.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/util.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/medoo/medoo.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/jwt.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/lang.php';
 
 class Base
 {

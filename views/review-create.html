@@ -1,0 +1,264 @@
+<?php 
+View::blade('head');
+?>
+	<body id="top">
+		<!-- One -->
+			<section id="read" class="wrapper style2 special">
+				<header class="major">
+					<h2>我打一个呵欠，点起一支纸烟，喷出烟来，
+						对着灯默默地敬奠这些苍翠精致的英雄们。</h2>
+					<h5 id="author-name">鲁迅</h5>
+				</header>
+				<ul class="icons major" id="author-action" style="display:none;">
+					
+					<li>
+						<a href="/" class="icon fa-home"><span class="label">主页</span></a>
+					</li>
+					<li>
+						<a href='/review'><span class="icon fa-list"><span class="label">列表</span></span></a>
+					</li>
+					<li>
+						<span href="#create" id='review-start' class="icon fa-pencil scrolly"><span class="label">发表</span></span>
+					</li>
+					<li>
+						<a href="/auth/profile"><span class="icon fa-user"><span class="label">个人设置</span></span></a>
+					</li>
+					<li>
+						<a href="#"><span class="icon fa-sign-out" id='inputLogout'><span class="label">登出</span></span></a>
+					</li>
+				</ul>
+				<ul class="icons major" id="author-login" style="display:none;">
+					<li><a id="share" href="#modal-share" role="button" data-toggle="modal" class="button special icon fa-sign-in">登录</a></li>
+						
+				</ul>
+				
+			</section>
+		<!-- Two -->
+		<!-- Three -->
+		<!-- Four -->
+			<section id="create" class="wrapper">
+				<div class="inner">
+					<header class="major">
+						<h2>读书心得</h2>
+					</header>
+					<section>
+						<form method="post" action="#">
+							<div class="row uniform">
+								<div class="12u$">
+									<input type="text" name="review-title" id="review-title" value="" placeholder="标题" />
+								</div>
+								<div class="12u$">
+									<div class="select-wrapper">
+										<select name="review-type" id="review-type">
+											<option value="">类别</option>
+											<option value="1">书籍推荐</option>
+											<option value="2">心得分享</option>
+											<option value="3">原创文章</option>
+											<option value="4">二手买卖</option>
+										</select>
+									</div>
+								</div>
+								<!--
+								<div class="4u 12u$(small)">
+									<input type="radio" id="demo-priority-low" name="demo-priority" checked>
+									<label for="demo-priority-low">Low</label>
+								</div>
+								<div class="4u 12u$(small)">
+									<input type="radio" id="demo-priority-normal" name="demo-priority">
+									<label for="demo-priority-normal">Normal</label>
+								</div>
+								<div class="4u$ 12u$(small)">
+									<input type="radio" id="demo-priority-high" name="demo-priority">
+									<label for="demo-priority-high">High</label>
+								</div>
+								<div class="6u 12u$(small)">
+									<input type="checkbox" id="demo-copy" name="demo-copy">
+									<label for="demo-copy">Email me a copy</label>
+								</div>
+								<div class="6u$ 12u$(small)">
+									<input type="checkbox" id="demo-human" name="demo-human" checked>
+									<label for="demo-human">Not a robot</label>
+								</div>
+								-->
+								<div class="12u$">
+									<textarea name="review-content" id="review-content" style="height:280px;" height=300 placeholder="心得内容" rows="6"></textarea>
+								</div>
+								
+						
+								<div id="review-action" class="12u$">
+									<ul class="actions">
+										<li><input type="button" id='review-submit' value="保存" class="special" /></li>
+										<li><input type="reset" value="重置" /></li>
+									</ul>
+								</div>
+							</div>
+						</form>
+					</section>
+
+
+				</div>
+			</section>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<ul class="icons">
+					<li id="oii"><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+					<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+					<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+				</ul>
+				<p class="copyright">&copy; Untitled. Credits: <a href="http://html5up.net">HTML5 UP</a></p>
+			</footer>
+
+<div class="modal fade" id="modal-share" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				 
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					×
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					登录
+				</h4>
+			</div>
+			
+			<div class="modal-body">
+				
+			<form class="form-horizontal">
+					<div class="control-group">
+						<div class="controls">
+							<input id="inputMobile" type="text" placeholder="手机"/>
+						</div>
+					</div>
+					<div class="control-group">
+						<div class="controls">
+							<input id="inputPassword" type="password" placeholder="密码"/>
+						</div>
+					</div>
+				
+					<div class="control-group">
+						<div class="controls">
+						    <button id="inputLogin" type="button" class="button special">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;登录&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+							 <button id="inputRegister" type="button" class="button " style="float: right;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注册&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+						</div>
+					</div>
+			</form>
+			</div>
+			<div class="modal-footer">
+				<button id="inputCancel" type="button" class="button" data-dismiss="modal">
+					取消
+				</button> 
+			</div>
+		</div>
+		
+	</div>
+</div>
+		
+		
+		
+		<!-- Scripts -->
+			<script src="/views/assets/js/jquery.scrolly.min.js"></script>
+			<script src="/views/assets/js/skel.min.js"></script>
+			<script src="/views/assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="/views/assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="/views/assets/js/main.js"></script>
+			<script src="/views/assets/js/summernote.min.js"></script>
+			<script>
+				$('#inputLogin').click(function(){
+					var mobile = $('#inputMobile').val();
+					var password = $('#inputPassword').val();
+					$.ajax({
+						type: "POST",
+						url: "/auth/login",
+						data: "mobile="+mobile+"&password="+password,
+						success: function (data) {
+							// Play with returned data in JSON format
+							if(data.substring(0,1) != "0")
+							{
+								alert(data.substring(1));
+							}else{
+								var author = data.split(':');
+								//window.location.reload();
+								$.cookie("token",author[2], { expires: 1});
+								$('#inputCancel').trigger('click');
+								$('#author-name').html(author[1]);
+								$('#author-action').css('display','block');
+								$('#author-login').css('display','none');
+								$('#review-action').css('display','block');
+								$('#review-start').trigger('click');
+							}
+						},
+						error: function (msg) {
+							alert(msg);
+						}
+					});
+				});
+				$('#inputLogout').click(function(){
+					$.cookie("token",'');
+					$('#author-name').html('鲁迅');
+					$('#author-action').css('display','none');
+					$('#review-action').css('display','none');
+					$('#author-login').css('display','block');
+				});
+				<?php
+					if($login){
+				?>
+						
+						$('#author-name').html("<?php echo $author['name']?>");
+						$('#author-action').css('display','block');
+						
+						$(document).ready(function(){
+							$('#review-start').trigger('click');
+							$('#review-action').css('display','block');  
+							$('#review-content').summernote({
+								height:280,
+								minHeight:280
+							});
+						});
+				<?php
+					}else{
+				?>
+						$(document).ready(function(){
+							$('#author-action').css('display','none');
+							$('#author-login').css('display','block');
+							$('#review-action').css('display','none');
+							$('#review-content').summernote({
+								height:280,
+								minHeight:280
+							});
+						});
+				<?php
+					}
+				?>
+						
+				$('#review-submit').click(function(){
+					var title = $('#review-title').val();
+					var type = $('#review-type').val();
+					var content = $('#review-content').code();
+					$.ajax({
+						type: "POST",
+						url: "/review",
+						data: "title="+title+"&type="+type+"&content="+content,
+						success: function (data) {
+							// Play with returned data in JSON format
+							var review = jQuery.parseJSON(data);
+							console.log(review);
+							if(review.code == "0")
+							{
+								alert("创建成功");
+								window.location.href='/review/'+review.result;
+							}else{
+								alert("创建失败");
+							}
+						},
+						error: function (msg) {
+							alert(msg);
+						}
+					});
+				});
+				
+				</script>
+	</body>
+<?
+View::blade('foot');
+?>

@@ -28,39 +28,19 @@
  * 
  */
 
-include_once $_SERVER['DOCUMENT_ROOT'].'/controllers/BaseController.php';
-include_once $_SERVER['DOCUMENT_ROOT'].'/models/ReviewModel.php';
-
-class HomeController extends BaseController
+class Lang
 {
-	public $reviewmodel;
-	public function __construct($parm1, $parm2, $parm3) {
-		parent::__construct($parm1, $parm2, $parm3);
-		$this->reviewmodel = new ReviewModel();
-	}
-	
-	public function index()
-	{
-		$keywords = $_GET['keywords'];
-		$whereparm = array(
-			'title[~]' => $keywords,
-			'content[~]' => $keywords
-		);
-		if($keywords){
-			$reviews = $this->reviewmodel->getlist('*', array('OR'=>$whereparm));
-		}else{
-			$reviews = $this->reviewmodel->getlist('*', array());
-		}
-				
-		
-		$parmValue = array(
-			'title' => 'RTS',
-			'login' => $this->login,
-			'author' => $this->author,
-			'reviews' => $reviews,
-			'keywords' => $keywords
-		);
-		return View::load('home', $parmValue);
-	}
+	public static $review_create_succ = "创建书评成功";
+	public static $review_create_fail = "创建书评失败";
+	public static $review_update_succ = "修改书评成功";
+	public static $review_update_fail = "修改书评失败";
+	public static $review_delete_succ = "删除书评成功";
+	public static $review_delete_fail = "删除书评失败";
+	public static $comment_create_succ = "创建评论成功";
+	public static $comment_create_fail = "创建评论失败";
+	public static $comment_delete_succ = "删除评论成功";
+	public static $comment_delete_fail = "删除评论失败";
+	public static $profile_update_succ = "修改信息成功";
+	public static $profile_update_fail = "修改信息失败";
 }
 ?>

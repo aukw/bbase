@@ -28,39 +28,53 @@
  * 
  */
 
-include_once $_SERVER['DOCUMENT_ROOT'].'/controllers/BaseController.php';
-include_once $_SERVER['DOCUMENT_ROOT'].'/models/ReviewModel.php';
 
-class HomeController extends BaseController
+include_once $_SERVER['DOCUMENT_ROOT'].'/controllers/BaseController.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/models/CommentModel.php';
+
+
+class CommentController extends BaseController
 {
-	public $reviewmodel;
+	public $commentmodel;
 	public function __construct($parm1, $parm2, $parm3) {
 		parent::__construct($parm1, $parm2, $parm3);
-		$this->reviewmodel = new ReviewModel();
+		$this->commentmodel = new CommentModel();
+	}
+		
+	public function store($targettype, $targetid)
+	{
+		$content = $_POST['content'];
+		$authorid = $this->author['id'];
+		$authorname = $this->author['name'];
+		$comment = array(
+			'targettype' => $targettype,
+			'targetid' => $targetid,
+			'content' => $content,
+			'authorid' => $authorid,
+			'authorname' => $authorname,
+			'created_at' => time()
+		);
+		$row = $this->commentmodel->insert($comment);
+		if($row){
+			return $this->go(Lang::$comment_create_succ,$row);
+		}else{
+			return $this->stop(Lang::$comment_create_fail);
+		}
 	}
 	
-	public function index()
+	public function delete()
 	{
-		$keywords = $_GET['keywords'];
-		$whereparm = array(
-			'title[~]' => $keywords,
-			'content[~]' => $keywords
+		$id = $_POST['id'];
+		$review = array(
+			'id' => $id,
+			'authorid' => $this->author['id']
 		);
-		if($keywords){
-			$reviews = $this->reviewmodel->getlist('*', array('OR'=>$whereparm));
+		$row = $this->commentwmodel->delete(array('AND' => $review));
+		if($row){
+			return $this->go(Lang::$comment_delete_succ);
 		}else{
-			$reviews = $this->reviewmodel->getlist('*', array());
+			return $this->stop(Lang::$comment_delete_fail);
 		}
-				
-		
-		$parmValue = array(
-			'title' => 'RTS',
-			'login' => $this->login,
-			'author' => $this->author,
-			'reviews' => $reviews,
-			'keywords' => $keywords
-		);
-		return View::load('home', $parmValue);
 	}
 }
 ?>

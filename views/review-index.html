@@ -10,8 +10,18 @@ View::blade('head');
 					<h5 id="author-name">鲁迅</h5>
 				</header>
 				<ul class="icons major" id="author-action" style="display:none;">
+					
 					<li>
-						<span href="#create" id='review-start' class="icon fa-pencil scrolly"><span class="label">发表</span></span>
+						<a href="/" class="icon fa-home"><span class="label">主页</span></a>
+					</li>
+					<li>
+						<span href="#list" id='review-start' class="icon fa-list scrolly"><span class="label">列表</span></span>
+					</li>
+					<li>
+						<a href="/review/create" ><span id='review-create' class="icon fa-pencil"><span class="label">发表</span></span></a>
+					</li>
+					<li>
+						<a href="/auth/profile"><span class="icon fa-user"><span class="label">个人设置</span></span></a>
 					</li>
 					<li>
 						<a href="#"><span class="icon fa-sign-out" id='inputLogout'><span class="label">登出</span></span></a>
@@ -26,63 +36,21 @@ View::blade('head');
 		<!-- Two -->
 		<!-- Three -->
 		<!-- Four -->
-			<section id="create" class="wrapper">
+			<section id="list" class="wrapper">
 				<div class="inner">
 					<header class="major">
-						<h2>读书心得</h2>
+						<h2>我的书评列表</h2>
 					</header>
 					<section>
-						<form method="post" action="#">
-							<div class="row uniform">
-								<div class="12u$">
-									<input type="text" name="review-title" id="review-title" value="" placeholder="标题" />
-								</div>
-								<div class="12u$">
-									<div class="select-wrapper">
-										<select name="review-type" id="review-type">
-											<option value="">类别</option>
-											<option value="1">书籍推荐</option>
-											<option value="2">心得分享</option>
-											<option value="3">原创文章</option>
-											<option value="4">二手买卖</option>
-										</select>
-									</div>
-								</div>
-								<!--
-								<div class="4u 12u$(small)">
-									<input type="radio" id="demo-priority-low" name="demo-priority" checked>
-									<label for="demo-priority-low">Low</label>
-								</div>
-								<div class="4u 12u$(small)">
-									<input type="radio" id="demo-priority-normal" name="demo-priority">
-									<label for="demo-priority-normal">Normal</label>
-								</div>
-								<div class="4u$ 12u$(small)">
-									<input type="radio" id="demo-priority-high" name="demo-priority">
-									<label for="demo-priority-high">High</label>
-								</div>
-								<div class="6u 12u$(small)">
-									<input type="checkbox" id="demo-copy" name="demo-copy">
-									<label for="demo-copy">Email me a copy</label>
-								</div>
-								<div class="6u$ 12u$(small)">
-									<input type="checkbox" id="demo-human" name="demo-human" checked>
-									<label for="demo-human">Not a robot</label>
-								</div>
-								-->
-								<div class="12u$">
-									<textarea name="review-content" id="review-content" style="height:280px;" height=300 placeholder="心得内容" rows="6"></textarea>
-								</div>
-								
-						
-								<div id="review-action" class="12u$">
-									<ul class="actions">
-										<li><input type="button" id='review-submit' value="保存" class="special" /></li>
-										<li><input type="reset" value="重置" /></li>
-									</ul>
-								</div>
-							</div>
-						</form>
+						<?php
+							foreach($reviews as $review)
+							{
+								echo '<hr />';
+								echo '<h5><a href="/review/'.$review['id'].'">'.$review['title'].'</a></h5>';
+								echo '<h6>'.Util::time2date($review['created_at']).'</h6>';
+								echo '<blockquote>'.$review['content'].'</blockquote>';
+							}
+						?>
 					</section>
 
 
@@ -231,8 +199,14 @@ View::blade('head');
 						data: "title="+title+"&type="+type+"&content="+content,
 						success: function (data) {
 							// Play with returned data in JSON format
-							if(data.substring(0,1) != "0")
+							var review = jQuery.parseJSON(data);
+							console.log(review);
+							if(review.code == "0")
 							{
+								alert("创建成功");
+								window.location.href='/review/'+review.result;
+							}else{
+								alert("创建失败");
 							}
 						},
 						error: function (msg) {

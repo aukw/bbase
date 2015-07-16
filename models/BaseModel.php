@@ -20,6 +20,13 @@ class BaseModel extends Base
     {
         return $this->_MODEL;
     }
+	
+	
+    function getEntity($parm)
+    {
+        $entity = $this->getsingle('*', $parm);
+        return $this->getModel((array)$entity);
+    }
     
     
     function getModel($data)

@@ -47,7 +47,19 @@ class UserController extends BaseController
 		$name = $_POST['name'];
 		$password = $_POST['password'];
 		$email = $_POST['email'];
-		return $this->usermobel->register($mobile, $password, $name, $email);		
+		$user =  $this->usermobel->register($mobile, $password, $name, $email);		
+		if($user){
+			$seed = array(
+				'mobile' => $mobile,
+				'password' => $password
+			);
+			$token = JWTAuth::setToken($seed);
+			//var_dump($token);
+			$name = $user['name']?$user['name']:$mobile;
+			return '0:'.$name.':'.$token;
+		}else{
+			return '1:登录失败';
+		}
 	}
 	
 	public function login()
@@ -67,7 +79,35 @@ class UserController extends BaseController
 		}else{
 			return '1:登录失败';
 		}
-
+	}
+	
+	public function show()
+	{
+		$parm = array('id' => $this->author['id']);
+		$profile = $this->usermobel->getEntity($parm);
+		$parmValue = array(
+			'login' => $this->login,
+			'author' => $this->author,
+			'profile' => $profile
+		);
+		return View::load('profile-edit', $parmValue);
+	}
+	
+	public function update()
+	{
+		$name = $_POST['name'];
+		$parm = array(
+			'name' => $name
+		);
+		$where = array(
+			'id' => $this->author['id']
+		);
+		$rows = $this->usermobel->update($parm, $where);
+		if($rows){
+			return $this->go(Lang::$profile_update_succ);
+		}else{
+			return $this->stop(Lang::$profile_update_fail);
+		}
 	}
 }
 ?>

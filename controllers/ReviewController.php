@@ -30,20 +30,126 @@
 
 
 include_once $_SERVER['DOCUMENT_ROOT'].'/controllers/BaseController.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/models/ReviewModel.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/models/CommentModel.php';
+
 
 class ReviewController extends BaseController
 {
+	public $reviewmodel;
+	public $commentmodel;
 	public function __construct($parm1, $parm2, $parm3) {
 		parent::__construct($parm1, $parm2, $parm3);
+		$this->reviewmodel = new ReviewModel();
+		$this->commentmodel = new CommentModel();
 	}
 	
+	public function index()
+	{
+		$where = array('authorid' => $this->author['id']);
+		$reviews = $this->reviewmodel->getlist('*', $where);
+		$parmValue = array(
+			'reviews' => $reviews,
+			'author' => $this->author,
+			'login' => $this->login
+		);
+		return View::load('review-index', $parmValue);
+	}
 	public function create()
 	{
 		$parmValue = array(
 			'author' => $this->author,
 			'login' => $this->login
 		);
-		return View::load('review', $parmValue);
+		return View::load('review-create', $parmValue);
+	}
+	
+	public function store()
+	{
+		$title = $_POST['title'];
+		$type = $_POST['type'];
+		$content = $_POST['content'];
+		$authorid = $this->author['id'];
+		$authorname = $this->author['name'];
+		$review = array(
+			'title' => $title,
+			'type' => $type,
+			'content' => $content,
+			'authorid' => $authorid,
+			'authorname' => $authorname,
+			'created_at' => time(),
+			'updated_at' => time()
+		);
+		$row = $this->reviewmodel->insert($review);
+		if($row){
+			return $this->go(Lang::$review_create_succ,$row);
+		}else{
+			return $this->stop(Lang::$review_create_fail);
+		}
+	}
+	
+	public function show($id)
+	{
+		$parm = array('id' => $id);
+		$review = $this->reviewmodel->getEntity($parm);
+		$commentparm = array('targettype'=>'review', 'targetid'=>$id);
+		$comments = $this->commentmodel->getlist('*', array('AND'=>$commentparm));
+		$parmValue = array(
+			'author' => $this->author,
+			'login' => $this->login,
+			'review' => $review,
+			'comments' => $comments
+		);
+		return View::load('review-show', $parmValue);
+	}
+	
+	public function edit($id)
+	{
+		$parm = array('id' => $id);
+		$review = $this->reviewmodel->getEntity($parm);
+		$review['typeoption'][$review['type']] = 'selected';
+		$parmValue = array(
+			'author' => $this->author,
+			'login' => $this->login,
+			'review' => $review
+		);
+		return View::load('review-edit', $parmValue);
+	}
+	
+	public function update()
+	{
+		$id = $_POST['id'];
+		$title = $_POST['title'];
+		$type = $_POST['type'];
+		$content = $_POST['content'];
+		$review = array(
+			'title' => $title,
+			'type' => $type,
+			'content' => $content,
+			'updated_at' => time()
+		);
+		$where = array('id' => $id);
+		$row = $this->reviewmodel->update($review, $where);
+		if($row){
+			return $this->go(Lang::$review_update_succ,$id);
+		}else{
+			return $this->stop(Lang::$review_update_fail);
+		}
+	}
+	
+	public function delete()
+	{
+		$id = $_POST['id'];
+		$review = array(
+			'id' => $id,
+			'authorid' => $this->author['id']
+		);
+		$row = $this->reviewmodel->delete(array('AND' => $review));
+		if($row){
+			return $this->go(Lang::$review_delete_succ);
+		}else{
+			return $this->stop(Lang::$review_delete_fail);
+		}
 	}
 }
 ?>

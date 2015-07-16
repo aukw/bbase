@@ -10,6 +10,6 @@ class Util
 {
     public static function time2date($dateline)
     {
-        return $dateline;
+        return date("Y-m-d H:m",$dateline);
     }
 }
