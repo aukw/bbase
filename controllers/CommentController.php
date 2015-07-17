@@ -36,8 +36,8 @@ include_once $_SERVER['DOCUMENT_ROOT'].'/models/CommentModel.php';
 class CommentController extends BaseController
 {
 	public $commentmodel;
-	public function __construct($parm1, $parm2, $parm3) {
-		parent::__construct($parm1, $parm2, $parm3);
+	public function __construct() {
+		parent::__construct();
 		$this->commentmodel = new CommentModel();
 	}
 		

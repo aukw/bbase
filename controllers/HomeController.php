@@ -34,8 +34,8 @@ include_once $_SERVER['DOCUMENT_ROOT'].'/models/ReviewModel.php';
 class HomeController extends BaseController
 {
 	public $reviewmodel;
-	public function __construct($parm1, $parm2, $parm3) {
-		parent::__construct($parm1, $parm2, $parm3);
+	public function __construct() {
+		parent::__construct();
 		$this->reviewmodel = new ReviewModel();
 	}
 	

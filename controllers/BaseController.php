@@ -17,9 +17,8 @@ class BaseController extends Base
 	public $parm3;
 	public $login;
 	public $author;
-    public function __construct($parm1, $parm2, $parm3) {
+    public function __construct() {
         parent::__construct();
-		$this->loadParm($parm1, $parm2, $parm3);
 		if($_COOKIE['token'] && strlen($_COOKIE['token'])>0){
 			$token = JWTAuth::getToken($_COOKIE['token']);
 			if($token){

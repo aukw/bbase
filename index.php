@@ -32,7 +32,6 @@ function router($controller, $method, $parm1='', $parm2='', $parm3='')
 {
 	include_once './controllers/'.$controller.'.php';
 	$entity = new $controller();
-	$entity->loadParm($parm1, $parm2, $parm3);
 	$parm = array($parm1, $parm2, $parm3);
 	$parmcount = count(array_filter($parm));
 	if($parmcount == 0){

@@ -35,8 +35,8 @@ include_once $_SERVER['DOCUMENT_ROOT'].'/models/UserModel.php';
 class UserController extends BaseController
 {
 	public $usermobel;
-	public function __construct($parm1, $parm2, $parm3) {
-		parent::__construct($parm1, $parm2, $parm3);
+	public function __construct() {
+		parent::__construct();
 		$this->usermobel = new UserModel();
 		
 	}

@@ -38,8 +38,8 @@ class ReviewController extends BaseController
 {
 	public $reviewmodel;
 	public $commentmodel;
-	public function __construct($parm1, $parm2, $parm3) {
-		parent::__construct($parm1, $parm2, $parm3);
+	public function __construct() {
+		parent::__construct();
 		$this->reviewmodel = new ReviewModel();
 		$this->commentmodel = new CommentModel();
 	}

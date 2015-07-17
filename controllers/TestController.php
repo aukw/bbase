@@ -34,7 +34,7 @@ class TestController extends BaseController
 {
 
 	public function __construct() {
-		parent::__construct($parm1, $parm2, $parm3);
+		parent::__construct();
 		echo "load parent construct";
 		;
 	}
