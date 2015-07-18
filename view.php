@@ -30,10 +30,6 @@ class View
        include_once './views/blades/'.$bladeFileName.'.blade.html';
     }
 	
-	public static function share($parmValue)
-	{
-		self::$parm = array_merge(self::$parm, $parmValue);
-	}
 
 }
 

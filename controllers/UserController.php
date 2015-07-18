@@ -58,7 +58,7 @@ class UserController extends BaseController
 			$name = $user['name']?$user['name']:$mobile;
 			return '0:'.$name.':'.$token;
 		}else{
-			return '1:登录失败';
+			return '1:注册失败';
 		}
 	}
 	
