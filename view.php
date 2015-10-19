@@ -2,14 +2,17 @@
 class View
 {
   public static $parm;
-  	function __construct()
+    function __construct()
     {
-
+        self::$parm = [];
     }
 
     public static function load($viewFileName, $parmValue)
     {
-      self::$parm = array_merge(self::$parm, $parmValue);
+      if(!is_array($parmValue)){
+          $parmValue = [$parmValue];
+      }
+      //self::$parm = array_merge(self::$parm, $parmValue);
       foreach ($parmValue as $key => $value) {
         $$key = $value;
       }
@@ -22,9 +25,9 @@ class View
       }
     }
 
-    public static function blade($bladeFileName)
+    public static function blade($bladeFileName, $parmVlaue = [])
     {
-      foreach (self::$parm as $key => $value) {
+      foreach ($parmVlaue as $key => $value) {
         $$key = $value;
       }
        include_once './views/blades/'.$bladeFileName.'.blade.html';

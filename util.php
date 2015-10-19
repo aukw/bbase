@@ -12,4 +12,15 @@ class Util
     {
         return date("Y-m-d H:m",$dateline);
     }
+    
+    
+    public static function checkMobile($mobile)
+    {
+        $check = true;
+        if(!is_numeric($mobile))
+        {
+            $check = false;
+        }
+        return $check;
+    }
 }

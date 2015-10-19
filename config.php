@@ -8,13 +8,14 @@
 
 class Config
 {
-    public function __construct() {
-        ;
-    }
-
     public static $mysql_hostname = 'localhost';
     public static $mysql_username = 'root';
     public static $mysql_password = 'root';
     public static $mysql_database = 'bbase';
     public static $mysql_tablepre = 'bb_';
+    
+    public static $METHOD_GET = 'GET';
+    public static $METHOD_POST = 'POST';
+    public static $METHOD_PUT = 'PUT';
+    public static $METHOD_DELETE = 'DELETE';
 }

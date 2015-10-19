@@ -5,6 +5,14 @@ require 'flight/Flight.php';
 
 
 Flight::route('/', function(){ router('HomeController', 'index');});
+Flight::route('GET /api', function(){ router('HomeController', 'api');});
+Flight::route('GET /api/info/@module', function($module){ router('InfoController', $module);});
+Flight::route('POST /api/sms/send', function(){ router('SMSController', 'send');});
+Flight::route('POST /api/auth/register', function(){ router('UserController', 'register');});
+Flight::route('POST /api/auth/login', function(){ router('UserController', 'login');});
+
+
+
 Flight::route('POST /auth/login', function(){router('UserController', 'login');});
 Flight::route('POST /auth/register', function(){router('UserController', 'register');});
 Flight::route('GET /auth/profile', function(){router('UserController', 'show');});

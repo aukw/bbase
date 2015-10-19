@@ -30,35 +30,43 @@
 
 
 include_once $_SERVER['DOCUMENT_ROOT'].'/controllers/BaseController.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/controllers/SMSController.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/models/UserModel.php';
 
 class UserController extends BaseController
 {
-	public $usermobel;
+	public $usermodel;
+        public $smsmodel;
 	public function __construct() {
 		parent::__construct();
-		$this->usermobel = new UserModel();
+		$this->usermodel = new UserModel();
+                $this->smsmodel = new SMSModel();
 		
 	}
 	
 	public function register()
 	{
-		$mobile = $_POST['mobile'];
-		$name = $_POST['name'];
-		$password = $_POST['password'];
-		$email = $_POST['email'];
-		$user =  $this->usermobel->register($mobile, $password, $name, $email);		
+		$mobile = parent::parm('mobile');
+		$password = parent::parm('password');
+                $valicode = parent::parm('valicode');
+                $check = SMSController::vali($mobile, $valicode);
+//                var_dump($check);
+//                die();
+                $name = $mobile;
+		$user =  $this->usermodel->register($mobile, $password, $name);		
 		if($user){
 			$seed = array(
-				'mobile' => $mobile,
-				'password' => $password
-			);
+                            'id' =>$user,
+                            'mobile' => $mobile,			
+                            );
 			$token = JWTAuth::setToken($seed);
-			//var_dump($token);
-			$name = $user['name']?$user['name']:$mobile;
-			return '0:'.$name.':'.$token;
+			var_dump($token);
+                        $data = array(
+                            'token' => $token
+                            );
+			return $this->go($data);
 		}else{
-			return '1:注册失败';
+			return $this->stop("register failed");
 		}
 	}
 	
@@ -66,25 +74,30 @@ class UserController extends BaseController
 	{
 		$mobile = $_POST['mobile'];
 		$password = $_POST['password'];
-		$user = $this->usermobel->login($mobile, $password);
+		$user = $this->usermodel->login($mobile, $password);
+//                var_dump($user);
+//                die();
 		if($user){
 			$seed = array(
 				'mobile' => $mobile,
-				'password' => $password
+				'id' => $user['id']
 			);
 			$token = JWTAuth::setToken($seed);
 			//var_dump($token);
-			$name = $user['name']?$user['name']:$mobile;
-			return '0:'.$name.':'.$token;
+                        $data = array(
+                            'token' => $token,
+                            'name' => $user['name']
+                        );
+			return $this->go('login success', $data);
 		}else{
-			return '1:登录失败';
+			return $this->stop("login failed");
 		}
 	}
 	
 	public function show()
 	{
 		$parm = array('id' => $this->author['id']);
-		$profile = $this->usermobel->getEntity($parm);
+		$profile = $this->usermodel->getEntity($parm);
 		$parmValue = array(
 			'login' => $this->login,
 			'author' => $this->author,
@@ -102,7 +115,7 @@ class UserController extends BaseController
 		$where = array(
 			'id' => $this->author['id']
 		);
-		$rows = $this->usermobel->update($parm, $where);
+		$rows = $this->usermodel->update($parm, $where);
 		if($rows){
 			return $this->go(Lang::$profile_update_succ);
 		}else{

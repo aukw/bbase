@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+	<title>TODO supply a title</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- 新 Bootstrap 核心 CSS 文件 -->
+	<link rel="stylesheet" href="/views/assets/css/bootstrap.min.css">
+
+	<!-- 可选的Bootstrap主题文件（一般不用引入） -->
+	<link rel="stylesheet" href="/views/assets/css/bootstrap-theme.min.css">
+
+	<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+	<script src="/views/assets/js/jquery.min.js"></script>
+
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="/views/assets/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+	<div class="container-fluid">
+	    <div class="row">
+		<div class="col-md-12">
+			<div class="jumbotron">
+				<h2>
+					Fly
+				</h2>
+				<p>
+					Fly API 列表
+				</p>
+			</div>
+		</div>
+	    </div>
+	    <div class="row">
+		<div class="col-md-4">
+			<div class="list-group">
+				 <a href="#" class="list-group-item active">API List</a>
+					<?php
+					    foreach($apilist as $api)
+					    {
+						echo '<div class="list-group-item">';
+						echo '<a href="#" onclick=show(this) id='.$api['module'].' >'.$api['name'].'</a>';
+						echo '</div>';
+					    }
+					?>
+			</div>
+		</div>
+		<div class="col-md-8">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						URL
+					</h3>
+				</div>
+				<div class="panel-body" id="message_url">
+					{URL}
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						Method
+					</h3>
+				</div>
+				<div class="panel-body" id="message_method">
+					{Method}
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						Params
+					</h3>
+				</div>
+				<div class="panel-body" id="message_params">
+					{Params}
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						Return
+					</h3>
+				</div>
+				<div class="panel-body" id="message_return">
+					{Return}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	
+	<script>
+	    function show(obj)
+	    {
+		var apiurl = "/api/info/" + obj.id;
+		$.ajax({
+		    type: "GET",
+		    url: apiurl,
+		    success: function (data) {
+			var dataObj = eval("("+data+")");
+			//alert(dataObj.code);
+			//alert(dataObj.message);
+			var msg = dataObj.result;
+			$('#message_url').html(msg.url);
+			$('#message_method').html(msg.method); 
+			$('#message_params').html(empty2null(msg.params)); 
+			$('#message_return').html(empty2null(msg.return)); 
+			
+		    },
+		    error: function (msg) {
+			alert(msg);
+		    }
+		})
+	    }
+	    
+	    function empty2null(str)
+	    {
+		
+		if(str.length > 0){
+		    var code = '<table class="table  table-hover table-condensed"><tr><th>Field</th><th>Comment</th></tr>';
+		    for(var i=0; i< str.length; i++)
+		    {
+			code = code + '<tr><td>' +str[i].name + "</td><td>" + str[i].value + '</td></tr>';
+		    }
+		    return code+'</table>';
+		}else{
+		    return 'N/A';
+		}
+	    }
+	</script>
+    </body>
+</html>

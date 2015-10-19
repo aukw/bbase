@@ -29,14 +29,12 @@
  */
 
 include_once $_SERVER['DOCUMENT_ROOT'].'/controllers/BaseController.php';
-include_once $_SERVER['DOCUMENT_ROOT'].'/models/ReviewModel.php';
 
-class HomeController extends BaseController
+class InfoController extends BaseController
 {
 	public $reviewmodel;
 	public function __construct() {
 		parent::__construct();
-		$this->reviewmodel = new ReviewModel();
 	}
 	
         public function index()
@@ -44,14 +42,33 @@ class HomeController extends BaseController
             
         }
         
-        public function api()
-        {
-            
-            $apilist = array(
-                array('name' => '注册','module' => 'register'),
-                array('name' => '发送验证码','module' => 'sendvalicode'),
+        public function register(){
+            $info = array(
+                'url' => '/api/register',
+                'method' => Config::$METHOD_POST,
+                'params' => array(
+                    array('name'=>'mobile', 'value'=>'用户手机号'),
+                    array('name'=>'password', 'value'=>'密码'),
+                    array('name'=>'valicode', 'value'=>'验证码'),
+                ),
+                'return' => array(
+                    array('name' =>'user', 'value' => '手机号 //第一次注册，没有填写用户名，就以手机号替代用户名'),
+                    array('name' => 'authcode', 'value' => 'JWT code //登录后，所有的请求操作都将该参数添加到URL后面，返回到服务器')
+                )
             );
-            return View::load('api',array('apilist' => $apilist));
+            return $this->go("resiter", $info);
+        }
+        
+        public function sendvalicode(){
+            $info = array(
+                'url' => '/api/sms/send',
+                'method' => Config::$METHOD_POST,
+                'params' => array(
+                    array('name'=>'mobile', 'value'=>'用户手机号'),
+                ),
+                'return' => ''
+            );
+            return $this->go("sendvalicode", $info);
         }
         
 //	public function index()

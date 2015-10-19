@@ -15,10 +15,12 @@ class BaseController extends Base
 	public $parm1;
 	public $parm2;
 	public $parm3;
+        public $parms;
 	public $login;
 	public $author;
     public function __construct() {
         parent::__construct();
+        $this->parms = array_merge($_GET, $_POST);
 		if($_COOKIE['token'] && strlen($_COOKIE['token'])>0){
 			$token = JWTAuth::getToken($_COOKIE['token']);
 			if($token){
@@ -32,10 +34,19 @@ class BaseController extends Base
 		}
     }
 
+    public static function parm($key)
+    {
+        if(isset($_POST[$key])){
+            $parm = $_POST[$key];
+        }else{
+            $parm = $_POST[$key];
+        }
+        return $parm;
+    }
     public function go($msg, $result=array())
     {
         $data = array(
-            'code' => '0',
+            'code' => '1',
             'message' => $msg,
             'result' => $result
         );
@@ -45,7 +56,7 @@ class BaseController extends Base
     public function stop($msg)
     {
         $data = array(
-            'code' => '1',
+            'code' => '0',
             'message' => $msg
         );
         return json_encode($data);
@@ -67,4 +78,8 @@ class BaseController extends Base
 		$this->parm3 = ($parm3 != null)?$parm3:'';
 	}
 
+        public function info()
+        {
+            
+        }
 }
