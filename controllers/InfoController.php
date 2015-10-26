@@ -106,6 +106,139 @@ class InfoController extends BaseController
             return $this->go('valicodelist', $info);
         }
         
+        public function eventcreate()
+        {
+            
+            $info = array(
+                'url' => '/api/events',
+                'method' => Config::$METHOD_POST,
+                'params' => array(
+                    array('name'=>'title', 'value'=>'活动标题'),
+                    array('name'=>'content', 'value'=>'活动内容'),
+                    array('name'=>'contact', 'value'=>'联系方式'),
+                    array('name'=>'fee', 'value'=>'活动费用'),
+                    array('name'=>'place', 'value'=>'活动地点'),
+                    array('name'=>'starttime', 'value'=>'活动开始时间'),
+                    array('name'=>'endtime', 'value'=>'活动结束时间'),
+                ),
+                'return' => array(
+                    array('name'=>'id', 'value'=>'活动ID'),
+                    array('name'=>'user', 'value'=>'User模型'),
+                    array('name'=>'title', 'value'=>'活动标题'),
+                    array('name'=>'content', 'value'=>'活动内容'),
+                    array('name'=>'contact', 'value'=>'联系方式'),
+                    array('name'=>'fee', 'value'=>'活动费用'),
+                    array('name'=>'place', 'value'=>'活动地点'),
+                    array('name'=>'dateline', 'value'=>'活动发布时间'),
+                    array('name'=>'starttime', 'value'=>'活动开始时间'),
+                    array('name'=>'endtime', 'value'=>'活动结束时间'),
+                ),
+            );
+            return $this->go("eventcreate", $info);
+        }
+        public function eventupdate()
+        {
+            
+            $info = array(
+                'url' => '/api/events/{eventid}',
+                'method' => Config::$METHOD_PUT,
+                'params' => array(
+                    array('name'=>'title', 'value'=>'活动标题'),
+                    array('name'=>'content', 'value'=>'活动内容'),
+                    array('name'=>'contact', 'value'=>'联系方式'),
+                    array('name'=>'fee', 'value'=>'活动费用'),
+                    array('name'=>'place', 'value'=>'活动地点'),
+                    array('name'=>'starttime', 'value'=>'活动开始时间'),
+                    array('name'=>'endtime', 'value'=>'活动结束时间'),
+                ),
+                'return' => array(
+                    array('name'=>'id', 'value'=>'活动ID'),
+                    array('name'=>'user', 'value'=>'User模型'),
+                    array('name'=>'title', 'value'=>'活动标题'),
+                    array('name'=>'content', 'value'=>'活动内容'),
+                    array('name'=>'contact', 'value'=>'联系方式'),
+                    array('name'=>'fee', 'value'=>'活动费用'),
+                    array('name'=>'place', 'value'=>'活动地点'),
+                    array('name'=>'dateline', 'value'=>'活动发布时间'),
+                    array('name'=>'starttime', 'value'=>'活动开始时间'),
+                    array('name'=>'endtime', 'value'=>'活动结束时间'),
+                ),
+            );
+            return $this->go("eventupdate", $info);
+        }
+        
+        public function eventdelete()
+        {
+            
+            $info = array(
+                'url' => '/api/events/{eventid}',
+                'method' => Config::$METHOD_DELETE,
+                'params' => '',
+                'return' => '',
+            );
+            return $this->go("eventdelete", $info);
+        }
+        
+        public function eventdetail()
+        {
+            
+            $info = array(
+                'url' => '/api/events/{eventid}',
+                'method' => Config::$METHOD_GET,
+                'params' => '',
+                'return' => array(
+                    array('name'=>'id', 'value'=>'活动ID'),
+                    array('name'=>'user', 'value'=>'User模型'),
+                    array('name'=>'title', 'value'=>'活动标题'),
+                    array('name'=>'content', 'value'=>'活动内容'),
+                    array('name'=>'contact', 'value'=>'联系方式'),
+                    array('name'=>'fee', 'value'=>'活动费用'),
+                    array('name'=>'place', 'value'=>'活动地点'),
+                    array('name'=>'dateline', 'value'=>'活动发布时间'),
+                    array('name'=>'starttime', 'value'=>'活动开始时间'),
+                    array('name'=>'endtime', 'value'=>'活动结束时间'),
+                ),
+            );
+            return $this->go("eventdetail", $info);
+        }
+        
+        public function eventlist()
+        {
+            
+            $info = array(
+                'url' => '/api/events',
+                'method' => Config::$METHOD_GET,
+                'params' => '',
+                'return' => array(
+                    array('name'=>'所有的参数与详情一致', 'value'=>'按时间倒序排列'),
+                ),
+            );
+            return $this->go("eventlist", $info);
+        }
+        
+        public function eventjoin()
+        {
+            
+            $info = array(
+                'url' => '/api/events/{eventid}/members',
+                'method' => Config::$METHOD_POST,
+                'params' => '',
+                'return' => '',
+            );
+            return $this->go("event join ok", $info);
+        }
+        
+        public function eventquit()
+        {
+            $info = array(
+                'url' => '/api/events/{eventid}/members',
+                'method' => Config::$METHOD_DELETE,
+                'params' => '',
+                'return' => '',
+            );
+            return $this->go("event quit ok", $info);
+        }
+        
 //	public function index()
 //	{
 //		$keywords = $_GET['keywords'];

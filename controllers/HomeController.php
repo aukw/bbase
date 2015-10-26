@@ -52,6 +52,13 @@ class HomeController extends BaseController
                 array('name' => '登录','module' => 'login'),
                 array('name' => '发送验证码','module' => 'sendvalicode'),
                 array('name' => '验证码列表','module' => 'valicodelist'),
+                array('name' => '创建活动','module' => 'eventcreate'),
+                array('name' => '修改活动','module' => 'eventupdate'),
+                array('name' => '删除活动','module' => 'eventdelete'),
+                array('name' => '活动详情','module' => 'eventdetail'),
+                array('name' => '活动列表','module' => 'eventlist'),
+                array('name' => '加入活动','module' => 'eventjoin'),
+                array('name' => '退出活动','module' => 'eventquit'),
             );
             return View::load('api',array('apilist' => $apilist));
         }
