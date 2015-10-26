@@ -41,7 +41,7 @@ class HomeController extends BaseController
 	
         public function index()
         {
-            
+            return View::load('fly',[]);
         }
         
         public function api()
@@ -49,7 +49,9 @@ class HomeController extends BaseController
             
             $apilist = array(
                 array('name' => '注册','module' => 'register'),
+                array('name' => '登录','module' => 'login'),
                 array('name' => '发送验证码','module' => 'sendvalicode'),
+                array('name' => '验证码列表','module' => 'valicodelist'),
             );
             return View::load('api',array('apilist' => $apilist));
         }

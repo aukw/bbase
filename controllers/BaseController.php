@@ -43,6 +43,21 @@ class BaseController extends Base
         }
         return $parm;
     }
+    
+    public static function parmall()
+    {
+        return array_merge($_POST, $_GET);
+    }
+    
+    public static function file($key)
+    {
+        if(isset($_FILES[$key])){
+            $file = $_FILES[$key];
+        }else{
+            $file = false;
+        }
+        return $file;
+    }
     public function go($msg, $result=array())
     {
         $data = array(

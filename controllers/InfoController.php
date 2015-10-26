@@ -29,6 +29,7 @@
  */
 
 include_once $_SERVER['DOCUMENT_ROOT'].'/controllers/BaseController.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/models/SMSModel.php';
 
 class InfoController extends BaseController
 {
@@ -44,12 +45,28 @@ class InfoController extends BaseController
         
         public function register(){
             $info = array(
-                'url' => '/api/register',
+                'url' => '/api/auth/register',
                 'method' => Config::$METHOD_POST,
                 'params' => array(
                     array('name'=>'mobile', 'value'=>'用户手机号'),
                     array('name'=>'password', 'value'=>'密码'),
                     array('name'=>'valicode', 'value'=>'验证码'),
+                ),
+                'return' => array(
+                    array('name' =>'user', 'value' => '手机号 //第一次注册，没有填写用户名，就以手机号替代用户名'),
+                    array('name' => 'authcode', 'value' => 'JWT code //登录后，所有的请求操作都将该参数添加到URL后面，返回到服务器')
+                )
+            );
+            return $this->go("resiter", $info);
+        }
+        
+        public function login(){
+            $info = array(
+                'url' => '/api/auth/login',
+                'method' => Config::$METHOD_POST,
+                'params' => array(
+                    array('name'=>'mobile', 'value'=>'用户手机号'),
+                    array('name'=>'password', 'value'=>'密码')
                 ),
                 'return' => array(
                     array('name' =>'user', 'value' => '手机号 //第一次注册，没有填写用户名，就以手机号替代用户名'),
@@ -69,6 +86,24 @@ class InfoController extends BaseController
                 'return' => ''
             );
             return $this->go("sendvalicode", $info);
+        }
+        
+        public function valicodelist(){
+            $sms = new SMSModel();
+            $smslist = $sms->getlist('*', []);
+            foreach ($smslist as $smssingle){
+                $valicode[] = array(
+                    'name' => '手机号: '.$smssingle['mobile'],
+                    'value' =>  '验证码: '.$smssingle['valicode']
+                );
+            }
+            $info = array(
+                'url' => '在发布之前，不真实发验证码，把验证码列出来，方便测试',
+                'method' => Config::$METHOD_GET,
+                'params' => $valicode,
+                'return' => ''
+            );
+            return $this->go('valicodelist', $info);
         }
         
 //	public function index()
