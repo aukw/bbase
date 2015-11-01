@@ -50,7 +50,7 @@ class InfoController extends BaseController
                 'params' => array(
                     array('name'=>'mobile', 'value'=>'用户手机号'),
                     array('name'=>'password', 'value'=>'密码'),
-                    array('name'=>'valicode', 'value'=>'验证码'),
+                    array('name'=>'valicode', 'value'=>'验证码,请先调用 获取验证码 接口获得'),
                 ),
                 'return' => array(
                     array('name' =>'user', 'value' => '手机号 //第一次注册，没有填写用户名，就以手机号替代用户名'),
