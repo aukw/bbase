@@ -20,9 +20,9 @@ class BaseController extends Base
 	public $author;
     public function __construct() {
         parent::__construct();
-        $this->parms = array_merge($_GET, $_POST);
-		if($_COOKIE['token'] && strlen($_COOKIE['token'])>0){
-			$token = JWTAuth::getToken($_COOKIE['token']);
+		if($_GET['token']){
+			$token = JWTAuth::getToken($_GET['token']);
+                        //var_dump($token);
 			if($token){
 				$dbuser = new UserModel();
 				$user = $dbuser->getUser(array('mobile'=>$token['mobile']));
@@ -96,5 +96,13 @@ class BaseController extends Base
         public function info()
         {
             
+        }
+        
+        public function checkAuth()
+        {
+            if($this->author['id'] < 0)
+            {
+                return $this->stop(Error::$err_000);
+            }
         }
 }

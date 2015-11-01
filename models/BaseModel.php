@@ -43,6 +43,7 @@ class BaseModel extends Base
     public function insert($parm)
     {
         $id = $this->db->insert($this->getTableName(), $parm);
+        //var_dump($this->db->error());
         return $id;
     }
     public function update($parm, $where)

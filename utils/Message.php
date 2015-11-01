@@ -6,11 +6,11 @@
 class Message
 {
 	//帐号
-	var $account = "。。。";
+	var $account = "cc";
 	//密码
-	var $passwd  = "。。。";
+	var $passwd  = "bb";
 	//webservice
-	var $url     = "。。。";
+	var $url     = "http://211.147.239.62/Service/WebService.asmx?wsdl";
 	//port
 	var $port    = "";
 	//type  方式,1为mos 2为200

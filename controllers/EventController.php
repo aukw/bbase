@@ -54,7 +54,7 @@ class EventController extends BaseController
             $data = $this->parmall();
             $event = $this->data2model($data);
             $poster = $this->file('poster');
-            $event['uid'] = $this->author['uid'];
+            $event['uid'] = $this->author['id'];
             $event['poster'] = $poster;
             $event['dateline'] = time();
             $id = $this->eventmodel->insert($event);
@@ -65,7 +65,7 @@ class EventController extends BaseController
 	public function show($id)
 	{
             $eventdata = $this->eventmodel->getsingle('*', array('id' => $id));
-            $event= $this->toModel($eventdata);
+            $event= $this->model2data($eventdata);
             return $this->go('event', $event);
             
 	}

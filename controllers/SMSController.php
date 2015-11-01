@@ -40,7 +40,7 @@ class SMSController extends BaseController
         );
         $this->sms->insert($data);
         //var_dump($data);
-        $this->message->_postSingle($mobile, $message);
+        //$this->message->_postSingle($mobile, $message);
         return $this->go('valicode sent');
     }
     

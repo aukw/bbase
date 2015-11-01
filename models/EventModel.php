@@ -5,7 +5,7 @@ include_once $_SERVER['DOCUMENT_ROOT'].'/models/BaseModel.php';
 /**
  *
  */
-class SMSModel extends BaseModel
+class EventModel extends BaseModel
 {
     
     function __construct()

@@ -53,18 +53,22 @@ class UserController extends BaseController
 //                var_dump($check);
 //                die();
                 $name = $mobile;
+                if($this->isMobileRegister($mobile))
+                {
+                    return $this->stop(Error::$err_100);
+                }
 		$user =  $this->usermodel->register($mobile, $password, $name);		
 		if($user){
 			$seed = array(
-                            'id' =>$user,
+                            'uid' =>$user,
                             'mobile' => $mobile,			
                             );
 			$token = JWTAuth::setToken($seed);
-			var_dump($token);
                         $data = array(
+                            'name' => $mobile,
                             'token' => $token
                             );
-			return $this->go($data);
+			return $this->go("register ok", $data);
 		}else{
 			return $this->stop("register failed");
 		}
@@ -72,15 +76,13 @@ class UserController extends BaseController
 	
 	public function login()
 	{
-		$mobile = $_POST['mobile'];
-		$password = $_POST['password'];
+		$mobile = parent::parm('mobile');
+		$password = parent::parm('password');
 		$user = $this->usermodel->login($mobile, $password);
-//                var_dump($user);
-//                die();
 		if($user){
 			$seed = array(
 				'mobile' => $mobile,
-				'id' => $user['id']
+				'uid' => $user['id']
 			);
 			$token = JWTAuth::setToken($seed);
 			//var_dump($token);
@@ -122,5 +124,19 @@ class UserController extends BaseController
 			return $this->stop(Lang::$profile_update_fail);
 		}
 	}
+        
+        private function isMobileRegister($mobile)
+        {
+            $check = false;
+            $where = array(
+                'mobile' => $mobile
+            );
+            $mobile = $this->usermodel->getsingle("*", $where);
+            if($mobile['id'])
+            {
+                $check = true;
+            }
+            return $check;
+        }
 }
 ?>

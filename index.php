@@ -12,6 +12,10 @@ Flight::route('POST /api/auth/register', function(){ router('UserController', 'r
 Flight::route('POST /api/auth/login', function(){ router('UserController', 'login');});
 
 
+Flight::route('POST /api/events', function(){ router('EventController', 'store');});
+Flight::route('GET /api/events/@eventid', function($eventid){ router('EventController', 'show', $eventid);});
+
+
 
 Flight::route('POST /auth/login', function(){router('UserController', 'login');});
 Flight::route('POST /auth/register', function(){router('UserController', 'register');});
