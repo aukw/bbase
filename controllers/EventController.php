@@ -75,7 +75,7 @@ class EventController extends BaseController
             $events = $this->eventmodel->getlist('*', []);
             foreach ($events as $event)
             {
-                $eventlist[] = $this->toModel($event);
+                $eventlist[] = $this->data2model($event);
             }
             return $this->go('event list', $eventlist);
             

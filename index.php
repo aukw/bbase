@@ -13,6 +13,7 @@ Flight::route('POST /api/auth/login', function(){ router('UserController', 'logi
 
 
 Flight::route('POST /api/events', function(){ router('EventController', 'store');});
+Flight::route('GET /api/events', function(){ router('EventController', 'showList');});
 Flight::route('GET /api/events/@eventid', function($eventid){ router('EventController', 'show', $eventid);});
 
 
