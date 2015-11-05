@@ -239,6 +239,64 @@ class InfoController extends BaseController
             return $this->go("event quit ok", $info);
         }
         
+        public function comment()
+        {
+            $info = array(
+                'url' => '/api/{targettype}/{targetid}/comments',
+                'method' => Config::$METHOD_POST,
+                'params' => array(
+                    array('name'=>'{targettype}', 'value'=>'events 暂时只有这一种'),
+                    array('name'=>'{targetid}', 'value'=>'eventid, 暂时只有这一种'),
+                    array('name'=>'content', 'value'=>'评论内容'),
+                ),
+                'return' => array(
+                    array('name'=>'id', 'value'=>'评论ID'),
+                    array('name'=>'user', 'value'=>'user{uid, name}'),
+                    array('name'=>'content', 'value'=>'评论内容'),
+                    array('name'=>'dateline', 'value'=>'评论时间，10位Unix Timestamp'),
+                    
+                ),
+            );
+            return $this->go("event quit ok", $info);
+        }
+        
+        public function commentlist()
+        {
+            $info = array(
+                'url' => '/api/{targettype}/{targetid}/comments',
+                'method' => Config::$METHOD_GET,
+                'params' => array(
+                    array('name'=>'{targettype}', 'value'=>'events 暂时只有这一种'),
+                    array('name'=>'{targetid}', 'value'=>'eventid, 暂时只有这一种'),
+                    array('name'=>'content', 'value'=>'评论内容'),
+                ),
+                'return' => array(
+                    array('name'=>'id', 'value'=>'评论ID'),
+                    array('name'=>'user', 'value'=>'user{uid, name}'),
+                    array('name'=>'content', 'value'=>'评论内容'),
+                    array('name'=>'dateline', 'value'=>'评论时间，10位Unix Timestamp'),
+                    
+                ),
+            );
+            return $this->go("event quit ok", $info);
+        }
+        
+        public function commentdelete()
+        {
+            $info = array(
+                'url' => '/api/comments/{commentid}',
+                'method' => Config::$METHOD_DELETE,
+                'params' => array(
+                    array('name'=>'{targettype}', 'value'=>'events 暂时只有这一种'),
+                    array('name'=>'{targetid}', 'value'=>'eventid, 暂时只有这一种'),
+                    array('name'=>'content', 'value'=>'评论内容'),
+                    array('name'=>'说明', 'value'=>'如果没有DELETE方法，请使用POST方法+Post变量 _method=delete'),
+                ),
+                'return' => ''
+            );
+            return $this->go("event quit ok", $info);
+        }
+        
 //	public function index()
 //	{
 //		$keywords = $_GET['keywords'];

@@ -43,33 +43,75 @@ class CommentController extends BaseController
 		
 	public function store($targettype, $targetid)
 	{
-		$content = $_POST['content'];
+		$content = parent::parm('content');
 		$authorid = $this->author['id'];
 		$authorname = $this->author['name'];
 		$comment = array(
-			'targettype' => $targettype,
+			'targettype' => $this->getTarget($targettype),
 			'targetid' => $targetid,
 			'content' => $content,
-			'authorid' => $authorid,
-			'authorname' => $authorname,
-			'created_at' => time()
+			'uid' => $authorid,
+			'name' => $authorname,
+			'dateline' => time()
 		);
 		$row = $this->commentmodel->insert($comment);
 		if($row){
-			return $this->go(Lang::$comment_create_succ,$row);
+                    $comment['id'] = $row;
+                    $comment = $this->data2model($comment);
+			return $this->go(Lang::$comment_create_succ,$comment);
 		}else{
 			return $this->stop(Lang::$comment_create_fail);
 		}
 	}
-	
-	public function delete()
+        
+        public function getList($targettype, $targetid)
+        {
+            $target = $this->getTarget($targettype);
+            $where = array(
+                'targettype' => $target,
+                'targetid' => $targetid
+            );
+            $commentlist = array();
+            $comments = $this->commentmodel->getlist('*', array('AND'=>$where));
+            foreach($comments as $comment)
+            {
+                $commentlist[] = $this->data2model($comment);
+            }
+            if(count($commentlist)){
+                return $this->go('comment list', $commentlist);
+            }else{
+                return $this->stop('comment list empty');
+            }
+            return $commentlist;
+        }
+	private function model2data($model)
+        {
+            
+        }
+        
+        private function data2model($data)
+        {
+            $data['user'] = array(
+                'uid' => $data['uid'],
+                'name' => $data['name']
+            );
+            return $data;
+        }
+        private function getTarget($targettype)
+        {
+            $target = array(
+                'events' => 'event'
+            );
+            return $target[$targettype];
+        }
+        
+	public function delete($id)
 	{
-		$id = $_POST['id'];
-		$review = array(
+		$comment = array(
 			'id' => $id,
-			'authorid' => $this->author['id']
+			'uid' => $this->author['id']
 		);
-		$row = $this->commentwmodel->delete(array('AND' => $review));
+		$row = $this->commentmodel->delete(array('AND' => $comment));
 		if($row){
 			return $this->go(Lang::$comment_delete_succ);
 		}else{

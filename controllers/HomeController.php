@@ -59,6 +59,9 @@ class HomeController extends BaseController
                 array('name' => '活动列表','module' => 'eventlist'),
                 array('name' => '加入活动','module' => 'eventjoin'),
                 array('name' => '退出活动','module' => 'eventquit'),
+                array('name' => '评论','module' => 'comment'),
+                array('name' => '评论列表','module' => 'commentlist'),
+                array('name' => '删除评论','module' => 'commentdelete'),
             );
             return View::load('api',array('apilist' => $apilist));
         }

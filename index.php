@@ -11,6 +11,9 @@ Flight::route('POST /api/sms/send', function(){ router('SMSController', 'send');
 Flight::route('POST /api/auth/register', function(){ router('UserController', 'register');});
 Flight::route('POST /api/auth/login', function(){ router('UserController', 'login');});
 
+Flight::route('POST /api/@type/@id/comments', function($type, $id){router('CommentController', 'store', $type, $id);});
+Flight::route('GET /api/@type/@id/comments', function($type, $id){router('CommentController', 'getList', $type, $id);});
+Flight::route('DELETE /api/comments/@id', function($id){router('CommentController', 'delete', $id);});
 
 Flight::route('POST /api/events', function(){ router('EventController', 'store');});
 Flight::route('GET /api/events', function(){ router('EventController', 'showList');});
@@ -28,7 +31,6 @@ Flight::route('POST /review/update', function(){router('ReviewController', 'upda
 Flight::route('POST /review/delete', function(){router('ReviewController', 'delete');});
 Flight::route('GET /review/edit/@id', function($id){router('ReviewController', 'edit', $id);});
 Flight::route('GET /review/@id', function($id){router('ReviewController', 'show', $id);});
-Flight::route('POST /@type/@id/comment', function($type, $id){router('CommentController', 'store', $type, $id);});
 
 
 Flight::route('POST /review', function(){router('ReviewController', 'store');});
