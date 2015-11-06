@@ -297,6 +297,49 @@ class InfoController extends BaseController
             return $this->go("event quit ok", $info);
         }
         
+        
+        public function followdelete()
+        {
+            $info = array(
+                'url' => '/api/follows/{followid}',
+                'method' => Config::$METHOD_DELETE,
+                'params' => array(
+                    array('name'=>'{followid}', 'value'=>'followid, 关注的对方的关注ID'),
+                    array('name'=>'说明', 'value'=>'如果没有DELETE方法，请使用POST方法+Post变量 _method=delete'),
+                ),
+                'return' => ''
+            );
+            return $this->go("follow delete ok", $info);
+        }
+        public function follow()
+        {
+            $info = array(
+                'url' => '/api/follows',
+                'method' => Config::$METHOD_POST,
+                'params' => array(
+                    array('name'=>'targetuid', 'value'=>'被关注对方的用户ID'),
+                ),
+                'return' => array(
+                    array('name'=>'id', 'value'=>'关注ID'),
+                    array('name'=>'user', 'value'=>'用户模型， user{uid, name}'),
+                    array('name'=>'dateline', 'value'=>'关注的时间')
+                )
+            );
+            return $this->go("event quit ok", $info);
+        }
+        public function followlist()
+        {
+            $info = array(
+                'url' => '/api/follows',
+                'method' => Config::$METHOD_GET,
+                'params' => '',
+                'return' => array(
+                    array('name'=>'[follow]', 'value'=>'follow array')
+                )
+            );
+            return $this->go("follow list ", $info);
+        }
+        
 //	public function index()
 //	{
 //		$keywords = $_GET['keywords'];

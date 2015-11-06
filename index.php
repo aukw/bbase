@@ -19,6 +19,10 @@ Flight::route('POST /api/events', function(){ router('EventController', 'store')
 Flight::route('GET /api/events', function(){ router('EventController', 'showList');});
 Flight::route('GET /api/events/@eventid', function($eventid){ router('EventController', 'show', $eventid);});
 
+Flight::route('GET /api/follows', function(){ router('FollowController', 'getList');});
+Flight::route('POST /api/follows', function(){ router('FollowController', 'follow');});
+Flight::route('DELETE /api/follows/@followid', function($followid){ router('FollowController', 'delete', $followid);});
+
 
 
 Flight::route('POST /auth/login', function(){router('UserController', 'login');});

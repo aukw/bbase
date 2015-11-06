@@ -62,6 +62,9 @@ class HomeController extends BaseController
                 array('name' => '评论','module' => 'comment'),
                 array('name' => '评论列表','module' => 'commentlist'),
                 array('name' => '删除评论','module' => 'commentdelete'),
+                array('name' => '关注列表','module' => 'followlist'),
+                array('name' => '关注他人','module' => 'follow'),
+                array('name' => '删除关注','module' => 'followdelete'),
             );
             return View::load('api',array('apilist' => $apilist));
         }
