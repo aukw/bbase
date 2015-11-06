@@ -75,6 +75,7 @@ class EventController extends BaseController
             $events = $this->eventmodel->getlist('*', []);
             foreach ($events as $event)
             {
+                
                 $eventlist[] = $this->data2model($event);
             }
             return $this->go('event list', $eventlist);
@@ -136,6 +137,9 @@ class EventController extends BaseController
                 'starttime' => $data['starttime'],
                 'endtime' => $data['endtime']
             );
+            if(isset($data['id'])){
+                $event['id'] = $data['id'];
+            }
             return $event;
         }
 }
