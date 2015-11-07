@@ -74,6 +74,30 @@ class FollowController extends BaseController
         }
     }
     
+    public function getFanList()
+    {
+        $where = array('targetuid' => $this->author['id']);
+        $follows = $this->followmodel->getlist('*', $where);
+        $followlist = array();
+        foreach($follows as $follow)
+        {
+            $followlist[] = array(
+                'id' => $follow['id'],
+                'user' => array(
+                    'uid' => $follow['uid'],
+                    'name' => $follow['name']
+                    ),
+                'dateline' => $follow['dateline']
+            );
+        }
+        if(count($followlist)){
+            return $this->go('fan list', $followlist);
+        }else{
+            return $this->warn('fan list empty');
+        }
+        
+    }
+    
     public function delete($id)
     {
         $where = array('id' => $id);

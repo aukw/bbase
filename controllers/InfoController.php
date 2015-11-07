@@ -339,6 +339,44 @@ class InfoController extends BaseController
             );
             return $this->go("follow list ", $info);
         }
+        public function fanlist()
+        {
+            $info = array(
+                'url' => '/api/fans',
+                'method' => Config::$METHOD_GET,
+                'params' => '',
+                'return' => array(
+                    array('name'=>'[fans]', 'value'=>'fans array, 与关注列表同一样的结构')
+                )
+            );
+            return $this->go("fans list ", $info);
+        }
+        
+        public function vistorlist()
+        {
+            $info = array(
+                'url' => '/api/vistors',
+                'method' => Config::$METHOD_GET,
+                'params' => '',
+                'return' => array(
+                    array('name'=>'[visitors]', 'value'=>'vistors array, 与关注列表同一样的结构')
+                )
+            );
+            return $this->go("vistor list ", $info);
+        }
+        
+        public function profile()
+        {
+            $info = array(
+                'url' => '/api/people/{uid}',
+                'method' => Config::$METHOD_GET,
+                'params' => '',
+                'return' => array(
+                    array('name'=>'user', 'value'=>'{"uid","name"}')
+                )
+            );
+            return $this->go('people profile ', $info);
+        }
         
 //	public function index()
 //	{
