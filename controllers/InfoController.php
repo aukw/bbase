@@ -378,6 +378,21 @@ class InfoController extends BaseController
             return $this->go('people profile ', $info);
         }
         
+        public function avatar()
+        {
+            $info = array(
+                'url' => '/api/profile/avatar',
+                'method' => Config::$METHOD_POST,
+                'params' => array(
+                    array('name'=>'flyimage[0]', 'value'=>'用户头像文件，上传前压缩，max_size:300k, max_width=max_height:1280')
+                ),
+                'return' => array(
+                    array('name'=>'null:result', 'value'=>'头像地址')
+                )
+            );
+            return $this->go('people profile avatar', $info);
+        }
+        
 //	public function index()
 //	{
 //		$keywords = $_GET['keywords'];

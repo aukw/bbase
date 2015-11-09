@@ -18,4 +18,5 @@ class Config
     public static $METHOD_POST = 'POST';
     public static $METHOD_PUT = 'PUT';
     public static $METHOD_DELETE = 'DELETE';
+    
 }

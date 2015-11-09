@@ -9,16 +9,19 @@
 include_once $_SERVER['DOCUMENT_ROOT'].'/controllers/BaseController.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/models/UserModel.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/models/VistorModel.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/models/UploadModel.php';
 
 class PeopleController extends BaseController
 {
     public $usermodel;
     public $visitormodel;
+    public $uploadmodel;
     
     public function __construct() {
             parent::__construct();
             $this->usermodel = new UserModel();
             $this->visitormodel = new VistorModel();
+            $this->uploadmodel = new UploadModel();
     }
     
     public function profile($uid)
@@ -69,6 +72,40 @@ class PeopleController extends BaseController
             return $this->go('visitor list', $followlist);
         }else{
             return $this->warn('visitor list empty');
+        }
+    }
+    
+    public function certify()
+    {
+        $realname = parent::parm('realname');
+        $location = parent::parm('location');
+        $statement = parent::parm('statement');
+        $idcard = parent::file('flyimage');
+    }
+    
+    public function avatar()
+    {
+        $avatar = parent::file('flyimage');
+        //var_dump($avatar);
+        $path = $this->uploadmodel->single($avatar);
+        if($path)
+        {
+            $file = array(
+                'path' => $path,
+                'dateline' => time(),
+                'uid' => $this->author['id'],
+                'name' => $this->author['name']
+            );
+            $uploadid = $this->uploadmodel->insert($file);
+            if($uploadid)
+            {
+                $this->usermodel->update(array('avatar'=>$uploadid), array('id'=>$this->author['id']));
+                return $this->go('avatar updated', $this->uploadmodel->server_host.$path);
+            }else{
+                return $this->warn('avatar update failed');
+            }
+        }else{
+            return $this->warn('avatar save failed');
         }
     }
     

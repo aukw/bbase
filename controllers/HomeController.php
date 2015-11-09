@@ -68,6 +68,7 @@ class HomeController extends BaseController
                 array('name' => '删除关注','module' => 'followdelete'),
                 array('name' => '访客列表','module' => 'visitorlist'),
                 array('name' => '用户详情','module' => 'profile'),
+                array('name' => '修改头像','module' => 'avatar'),
                 
             );
             return View::load('api',array('apilist' => $apilist));

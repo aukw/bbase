@@ -27,6 +27,7 @@ Flight::route('DELETE /api/follows/@followid', function($followid){ router('Foll
 
 
 Flight::route('GET /api/people/@uid', function($uid){ router('PeopleController', 'profile', $uid);});
+Flight::route('POST /api/profile/avatar', function(){ router('PeopleController', 'avatar');});
 
 
 
