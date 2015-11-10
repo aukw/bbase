@@ -69,6 +69,7 @@ class HomeController extends BaseController
                 array('name' => '访客列表','module' => 'visitorlist'),
                 array('name' => '用户详情','module' => 'profile'),
                 array('name' => '修改头像','module' => 'avatar'),
+                array('name' => '修改其他属性','module' => 'field'),
                 
             );
             return View::load('api',array('apilist' => $apilist));

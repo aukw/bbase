@@ -393,6 +393,23 @@ class InfoController extends BaseController
             return $this->go('people profile avatar', $info);
         }
         
+        public function avatar()
+        {
+            $info = array(
+                'url' => '/api/profile/field',
+                'method' => Config::$METHOD_PUT,
+                'params' => array(
+                    array('name'=>'nickname', 'value'=>'昵称'),
+                    array('name'=>'signature', 'value'=>'个性签名'),
+                    array('name'=>'intro', 'value'=>'个人简介'),
+                ),
+                'return' => array(
+                    array('name'=>'null:result', 'value'=>'头像地址')
+                )
+            );
+            return $this->go('people profile avatar', $info);
+        }
+        
 //	public function index()
 //	{
 //		$keywords = $_GET['keywords'];

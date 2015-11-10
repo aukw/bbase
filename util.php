@@ -23,4 +23,14 @@ class Util
         }
         return $check;
     }
+    
+    public static function getValueByKeys($values, $keys)
+    {
+        $value = array();
+        foreach($keys as $key)
+        {
+            $value[$key] = $values[$key];
+        }
+        return $value;
+    }
 }

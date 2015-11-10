@@ -109,4 +109,18 @@ class PeopleController extends BaseController
         }
     }
     
+    public function field()
+    {
+        $parms = parent::parmall();
+        $fields = Util::getValueByKeys($parms, $this->usermodel->_MODEL);
+        if(count($fields))
+        {
+            $this->usermodel->update($fields, array('id'=>$this->author['id']));
+            return $this->go('profile fields saved');
+        }else{
+            return $this->warn('profile fields can not be null');
+        }
+    }
+    
+    
 }

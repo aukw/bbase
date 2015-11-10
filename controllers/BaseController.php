@@ -44,6 +44,7 @@ class BaseController extends Base
         return $parm;
     }
     
+    
     public static function parmall()
     {
         return array_merge($_POST, $_GET);
