@@ -27,12 +27,12 @@ class UploadModel extends BaseModel
         parent::__construct();
     }
     
-    public function single($file)
+    public function single($file, $key=0)
     {
         $check = false;
-        $targetname = md5(rand(1,99).$file['name'][0].time());
-        $target = $this->checkDir().'/'.$targetname.'.'.pathinfo($file['name'][0], PATHINFO_EXTENSION);
-        $move = move_uploaded_file($file['tmp_name'][0],$target);
+        $targetname = md5(rand(1,99).$file['name'][$key].time());
+        $target = $this->checkDir().'/'.$targetname.'.'.pathinfo($file['name'][$key], PATHINFO_EXTENSION);
+        $move = move_uploaded_file($file['tmp_name'][$key],$target);
         if($move){
             $check = str_replace($this->storage_base, '', $target);
         }

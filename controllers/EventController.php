@@ -32,16 +32,19 @@
 include_once $_SERVER['DOCUMENT_ROOT'].'/controllers/BaseController.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/models/EventModel.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/models/CommentModel.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/models/UploadModel.php';
 
 
 class EventController extends BaseController
 {
 	public $eventmodel;
 	public $commentmodel;
+        public $uploadmodel;
 	public function __construct() {
 		parent::__construct();
 		$this->eventmodel = new EventModel();
 		$this->commentmodel = new CommentModel();
+                $this->uploadmodel = new UploadModel();
 	}
 	
 	public function index()
@@ -53,9 +56,22 @@ class EventController extends BaseController
 	{
             $data = $this->parmall();
             $event = $this->data2model($data);
-            $poster = $this->file('poster');
+            $poster = $this->file('flyimage');
+            $uploadid = 0;
+            if(count($poster)>0)
+            {
+                $path = $this->uploadmodel->single($poster);
+                $upload = array(
+                    'uid' => $this->author['id'],
+                    'name' => $this->author['name'],
+                    'path' => $path,
+                    'dateline' => time()
+                );
+                $uploadid = $this->uploadmodel->insert($upload);
+                
+            }   
             $event['uid'] = $this->author['id'];
-            $event['poster'] = $poster;
+            $event['poster'] = $uploadid;
             $event['dateline'] = time();
             $id = $this->eventmodel->insert($event);
             $event['id'] = $id;
@@ -107,6 +123,11 @@ class EventController extends BaseController
         
         public function model2data($model)
         {
+            if($model['poster'])
+            {
+                $upload = $this->uploadmodel->getEntity(array('id'=>$model['poster']));
+                $model['poster'] = $this->uploadmodel->server_host.$upload['path'];
+            }
             $event = array(
                 'id' => $model['id'],
                 'uid' => $model['uid'],

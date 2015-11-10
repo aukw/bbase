@@ -245,8 +245,8 @@ class InfoController extends BaseController
                 'url' => '/api/{targettype}/{targetid}/comments',
                 'method' => Config::$METHOD_POST,
                 'params' => array(
-                    array('name'=>'{targettype}', 'value'=>'events 暂时只有这一种'),
-                    array('name'=>'{targetid}', 'value'=>'eventid, 暂时只有这一种'),
+                    array('name'=>'{targettype}', 'value'=>'enum("events","people") 对活动评论，对人物留言'),
+                    array('name'=>'{targetid}', 'value'=>'enum("eventid","uid") '),
                     array('name'=>'content', 'value'=>'评论内容'),
                 ),
                 'return' => array(
@@ -266,8 +266,8 @@ class InfoController extends BaseController
                 'url' => '/api/{targettype}/{targetid}/comments',
                 'method' => Config::$METHOD_GET,
                 'params' => array(
-                    array('name'=>'{targettype}', 'value'=>'events 暂时只有这一种'),
-                    array('name'=>'{targetid}', 'value'=>'eventid, 暂时只有这一种'),
+                    array('name'=>'{targettype}', 'value'=>'enum("events","people") 对活动评论，对人物留言'),
+                    array('name'=>'{targetid}', 'value'=>'enum("eventid","uid") '),
                     array('name'=>'content', 'value'=>'评论内容'),
                 ),
                 'return' => array(
@@ -287,9 +287,7 @@ class InfoController extends BaseController
                 'url' => '/api/comments/{commentid}',
                 'method' => Config::$METHOD_DELETE,
                 'params' => array(
-                    array('name'=>'{targettype}', 'value'=>'events 暂时只有这一种'),
-                    array('name'=>'{targetid}', 'value'=>'eventid, 暂时只有这一种'),
-                    array('name'=>'content', 'value'=>'评论内容'),
+                    array('name'=>'content', 'value'=>'评论内容 留言'),
                     array('name'=>'说明', 'value'=>'如果没有DELETE方法，请使用POST方法+Post变量 _method=delete'),
                 ),
                 'return' => ''
@@ -393,7 +391,7 @@ class InfoController extends BaseController
             return $this->go('people profile avatar', $info);
         }
         
-        public function avatar()
+        public function field()
         {
             $info = array(
                 'url' => '/api/profile/field',

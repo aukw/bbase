@@ -100,7 +100,9 @@ class CommentController extends BaseController
         private function getTarget($targettype)
         {
             $target = array(
-                'events' => 'event'
+                'events' => 'event',
+                'people' => 'people'
+                
             );
             return $target[$targettype];
         }
