@@ -19,6 +19,3 @@ class EventModel extends BaseModel
     
 }
 
-
-
-?>

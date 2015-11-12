@@ -42,5 +42,11 @@ class Lang
 	public static $comment_delete_fail = "删除评论失败";
 	public static $profile_update_succ = "修改信息成功";
 	public static $profile_update_fail = "修改信息失败";
+        
+        
+        public static $singer_apply_ok = "已申请，请等待审核";
+        public static $singer_apply_fail = "申请失败";
+        
+        public static $password_change_ok = '修改密码成功，请重新登录';
 }
 ?>

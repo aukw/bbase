@@ -30,39 +30,79 @@
 
 
 include_once $_SERVER['DOCUMENT_ROOT'].'/controllers/BaseController.php';
-include_once $_SERVER['DOCUMENT_ROOT'].'/models/CommentModel.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/models/LikeModel.php';
 
 
 class CommentController extends BaseController
 {
-	public $commentmodel;
+	public $likemodel;
 	public function __construct() {
 		parent::__construct();
-		$this->commentmodel = new CommentModel();
+		$this->likemodel = new LikeModel();
 	}
 		
 	public function store($targettype, $targetid)
 	{
-		$content = parent::parm('content');
-		$authorid = $this->author['id'];
-		$authorname = $this->author['name'];
-		$comment = array(
-			'targettype' => $this->getTarget($targettype),
-			'targetid' => $targetid,
-			'content' => $content,
-			'uid' => $authorid,
-			'name' => $authorname,
-			'dateline' => time()
-		);
-		$row = $this->commentmodel->insert($comment);
-		if($row){
-                    $comment['id'] = $row;
-                    $comment = $this->data2model($comment);
-			return $this->go(Lang::$comment_create_succ,$comment);
-		}else{
-			return $this->stop(Lang::$comment_create_fail);
-		}
+            $status = $this->getLikeStatus($targettype, $targetid);
+            if($status)
+            {
+                $check = $this->delete($status);
+            }else{
+                $check = $this->addLike($targettype, $targetid);
+            }
+            if($check){
+                return $this->go('like ok', $check);
+            }{
+                return $this->warn('like faild');
+            }
 	}
+        
+        private function addLike($targettype, $targetid)
+        {
+            $authorid = $this->author['id'];
+            $authorname = $this->author['name'];
+            $like = array(
+                'targettype' => $this->getTarget($targettype),
+                'targetid' => $targetid,
+                'uid' => $authorid,
+                'name' => $authorname,
+                'dateline' => time()
+            );
+            $row = $this->likemodel->insert($like);
+            if($row){
+                $like['id'] = $row;
+                $like = $this->data2model($like);
+                return $like;
+            }else{
+                return false;
+            }
+        }
+        
+        private function delLike($likeid)
+        {
+            $del = 0;
+            $where = array(
+                'id' => $likeid,
+                'uid' => $this->author['id']
+            );
+            $del = $this->likemodel->delete(array('and' => $where));
+            return $del;
+        }
+        
+        private function getLikeStatus($targettype, $targetid)
+        {
+            $check = 0;
+            $where = array(
+                'targettype' => $this->getTarget($targettype),
+                'targetid' => $targetid,
+                'uid' => $this->author['id']
+            );
+            $like = $this->likemodel->getEntity(array('AND'=>$where));
+            if($like){
+                $check = $like['id'];
+            }
+            return $check;
+        }
         
         public function getList($targettype, $targetid)
         {

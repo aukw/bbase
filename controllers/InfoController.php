@@ -78,9 +78,10 @@ class InfoController extends BaseController
         
         public function sendvalicode(){
             $info = array(
-                'url' => '/api/sms/send',
+                'url' => '/api/sms/@type',
                 'method' => Config::$METHOD_POST,
                 'params' => array(
+                    array('name'=>'说明 @type', 'value'=>' enum("register", "password")'),
                     array('name'=>'mobile', 'value'=>'用户手机号'),
                 ),
                 'return' => ''

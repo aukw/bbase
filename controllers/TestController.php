@@ -29,6 +29,8 @@
  */
 
 include_once $_SERVER['DOCUMENT_ROOT'].'/controllers/BaseController.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/utils/region.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/utils/Location.php';
 
 class TestController extends BaseController
 {
@@ -39,12 +41,14 @@ class TestController extends BaseController
 		;
 	}
 
-	public function testGet()
+	public function test()
 	{
-		$parm  = $_GET['parm'];
-		echo 'parm: '.$parm.' ! ';
-		return "test for method: GET";
-	}
+            echo '0';
+            echo  Location::getPlace('11', '03', 'place');
+            echo '1';
+            
+            return 'good';
+        }
 
 	public function testPost()
 	{
@@ -61,4 +65,3 @@ class TestController extends BaseController
 		View::load('test', $parm);
 	}
 }
-?>

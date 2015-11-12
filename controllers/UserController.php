@@ -55,7 +55,7 @@ class UserController extends BaseController
                 $name = $mobile;
                 if($this->isMobileRegister($mobile))
                 {
-                    return $this->stop(Error::$err_100);
+                    return $this->warn(Error::$err_100);
                 }
 		$user =  $this->usermodel->register($mobile, $password, $name);		
 		if($user){
@@ -70,10 +70,34 @@ class UserController extends BaseController
                             );
 			return $this->go("register ok", $data);
 		}else{
-			return $this->stop("register failed");
+			return $this->warn("register failed");
 		}
 	}
 	
+        public function password()
+        {
+                $mobile = parent::parm('mobile');
+		$password = parent::parm('password');
+                $valicode = parent::parm('valicode');
+                $check = SMSController::vali($mobile, $valicode, 'password');
+//                var_dump($check);
+//                die();
+                if(!$this->isMobileRegister($mobile))
+                {
+                    return $this->warn(Error::$err_101);
+                }
+                if($check)
+                {
+                    $passwordarr = array(
+                        'password' => md5($password)
+                    );
+                    $this->usermodel->update($passwordarr, array('mobile'=>$mobile));
+                    return $this->go(Lang::$password_change_ok);
+                }else{
+                    return $this->warn(Error::$err_102);
+                }
+        }
+        
 	public function login()
 	{
 		$mobile = parent::parm('mobile');
@@ -138,5 +162,6 @@ class UserController extends BaseController
             }
             return $check;
         }
+        
+        
 }
-?>

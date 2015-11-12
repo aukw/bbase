@@ -22,7 +22,7 @@ class SMSController extends BaseController
             $this->sms = new SMSModel();
     }
     
-    public function send()
+    public function send($type='register')
     {
         $mobile = parent::parm('mobile');
         //var_dump($mobile);
@@ -33,7 +33,7 @@ class SMSController extends BaseController
         $valicode = $this->getRandomNum();
         $message = $this->getContent($valicode);
         $data = array(
-            'type' => 'register',
+            'type' => $type,
             'mobile' => $mobile,
             'valicode' => $valicode,
             'dateline' => time()
@@ -44,15 +44,18 @@ class SMSController extends BaseController
         return $this->go('valicode sent');
     }
     
-    public static function vali($mobile, $valicode)
+    
+    
+    public static function vali($mobile, $valicode, $type='register')
     {
         $check = false;
         $where = array(
             'mobile' => $mobile,
-            'valicode' => $valicode
+            'valicode' => $valicode,
+            'type' => $type
         );
         $smsmodel = new SMSModel();
-        $single = $smsmodel->getsingle('*', $where);
+        $single = $smsmodel->getsingle('*', array('AND' => $where));
         if(count($single) > 0){
             $check = true;
         }

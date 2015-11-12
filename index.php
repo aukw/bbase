@@ -7,7 +7,7 @@ require 'flight/Flight.php';
 Flight::route('/', function(){ router('HomeController', 'index');});
 Flight::route('GET /api', function(){ router('HomeController', 'api');});
 Flight::route('GET /api/info/@module', function($module){ router('InfoController', $module);});
-Flight::route('POST /api/sms/send', function(){ router('SMSController', 'send');});
+Flight::route('POST /api/sms/@type', function($type){ router('SMSController', 'send', $type);});
 Flight::route('POST /api/auth/register', function(){ router('UserController', 'register');});
 Flight::route('POST /api/auth/login', function(){ router('UserController', 'login');});
 
@@ -15,9 +15,13 @@ Flight::route('POST /api/@type/@id/comments', function($type, $id){router('Comme
 Flight::route('GET /api/@type/@id/comments', function($type, $id){router('CommentController', 'getList', $type, $id);});
 Flight::route('DELETE /api/comments/@id', function($id){router('CommentController', 'delete', $id);});
 
+Flight::route('POST /api/@type/@id/likes', function($type, $id){router('LikeController', 'store', $type, $id);});
+
+
 Flight::route('POST /api/events', function(){ router('EventController', 'store');});
 Flight::route('GET /api/events', function(){ router('EventController', 'showList');});
 Flight::route('GET /api/events/@eventid', function($eventid){ router('EventController', 'show', $eventid);});
+Flight::route('DELETE /api/events/@eventid', function($eventid){ router('EventController', 'delete', $eventid);});
 
 Flight::route('GET /api/fans', function(){ router('PeopleController', 'getFanList');});
 Flight::route('GET /api/follows', function(){ router('FollowController', 'getList');});
@@ -47,7 +51,7 @@ Flight::route('GET /review/@id', function($id){router('ReviewController', 'show'
 Flight::route('POST /review', function(){router('ReviewController', 'store');});
 
 
-Flight::route('GET /test', function(){router('TestController', 'testGet');});
+Flight::route('GET /api/test', function(){router('TestController', 'test');});
 Flight::route('GET /testt', function(){router('TestController', 'testTemplate');});
 
 
