@@ -26,10 +26,21 @@ class Util
     
     public static function getValueByKeys($values, $keys)
     {
-        $value = array();
-        foreach($keys as $key)
-        {
-            $value[$key] = $values[$key];
+        $results = array();
+        if(is_array($keys)){
+            foreach($values as $value)
+            {
+                $result = array();
+                foreach($keys as $key)
+                {
+                    $result[$key] = $value[$key];
+                }
+                $results[] = $result;
+            }
+        }else{
+            foreach($values as $value){
+                $results[] = $value[$key];
+            }
         }
         return $value;
     }

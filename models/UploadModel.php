@@ -62,5 +62,27 @@ class UploadModel extends BaseModel
         return $monthdaydir;
     }
     
+    public function getAvatars($ids)
+    {
+        $avatars = array();
+        $uploads = $this->getlist('*', array('id'=>$ids));
+        foreach($uploads as $upload)
+        {
+            $avatars[$upload['uid']] = $this->server_host.$upload['path']; 
+        }
+        return $avatars;
+    }
+    
+    public function getAvatar($id)
+    {
+        if($id){
+            $upload = $this->getEntity(array('id'=>$id));
+            $avatar = $this->server_host.$upload['path'];
+            return $avatar;
+        }else{
+            return '';
+        }
+    }
+    
     
 }

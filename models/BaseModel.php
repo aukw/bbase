@@ -75,4 +75,9 @@ class BaseModel extends Base
     {
         return Config::$mysql_tablepre.$this->_DB_TABLE_NAME;
     }
+    
+    public function count($where)
+    {
+        return $this->db->count($this->getTableName(), $where);
+    }
 }

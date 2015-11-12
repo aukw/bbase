@@ -46,7 +46,7 @@ class CommentController extends BaseController
             $status = $this->getLikeStatus($targettype, $targetid);
             if($status)
             {
-                $check = $this->delete($status);
+                $check = $this->delLike($status);
             }else{
                 $check = $this->addLike($targettype, $targetid);
             }
@@ -104,30 +104,6 @@ class CommentController extends BaseController
             return $check;
         }
         
-        public function getList($targettype, $targetid)
-        {
-            $target = $this->getTarget($targettype);
-            $where = array(
-                'targettype' => $target,
-                'targetid' => $targetid
-            );
-            $commentlist = array();
-            $comments = $this->commentmodel->getlist('*', array('AND'=>$where));
-            foreach($comments as $comment)
-            {
-                $commentlist[] = $this->data2model($comment);
-            }
-            if(count($commentlist)){
-                return $this->go('comment list', $commentlist);
-            }else{
-                return $this->stop('comment list empty');
-            }
-            return $commentlist;
-        }
-	private function model2data($model)
-        {
-            
-        }
         
         private function data2model($data)
         {

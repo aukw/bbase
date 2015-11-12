@@ -58,7 +58,10 @@ class PeopleController extends BaseController
     public function getVisitorList()
     {
         $where = array('targetuid' => $this->author['id']);
-        $follows = $this->followmodel->getlist('*', $where);
+        $follows = $this->visitormodel->getlist('*', $where);
+        $users = $this->usermodel->getlist('*', array('uid'=>  Util::getValueByKeys($follows, 'uid')));
+        $followids = Util::getValueByKeys($users, 'avatar');
+        $followavatars = $this->uploadmodel->getAvatars($followids);
         $followlist = array();
         foreach($follows as $follow)
         {
@@ -66,7 +69,8 @@ class PeopleController extends BaseController
                 'id' => $follow['id'],
                 'user' => array(
                     'uid' => $follow['uid'],
-                    'name' => $follow['name']
+                    'name' => $follow['name'],
+                    'avatar' => $followavatars[$follow['uid']]
                     ),
                 'dateline' => $follow['dateline']
             );
@@ -81,10 +85,12 @@ class PeopleController extends BaseController
     public function certify()
     {
         $realname = parent::parm('realname');
+        $sex = parent::parm('sex');
         $location_prov = parent::parm('location_prov');
         $location_city = parent::parm('location_city');
         $location_detail = parent::parm('location_detail');
         $statement = parent::parm('statement');
+        $idcardno = parent::parm('idcardno');
         $idcard = parent::file('flyimage'); 
         $uploadid = 0;
         if($idcard){
@@ -102,10 +108,12 @@ class PeopleController extends BaseController
         }
         $singer = array(
             'realname' => $realname,
+            'sex' => $sex,
             'location_prov' => $location_prov,
             'location_city' => $location_city,
             'location_detail' => $location_detail,
             'idcard' => $uploadid,
+            'idcardno' => $idcardno,
             'statement' => $statement,
             'level' => 0,
         );

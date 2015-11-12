@@ -33,6 +33,8 @@ include_once $_SERVER['DOCUMENT_ROOT'].'/controllers/BaseController.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/models/EventModel.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/models/CommentModel.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/models/UploadModel.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/models/UserModel.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/models/FollowModel.php';
 
 
 class EventController extends BaseController
@@ -40,11 +42,18 @@ class EventController extends BaseController
 	public $eventmodel;
 	public $commentmodel;
         public $uploadmodel;
+        public $usermodel;
+        public $followmodel;
+        public $likemodel;
+        
 	public function __construct() {
 		parent::__construct();
 		$this->eventmodel = new EventModel();
 		$this->commentmodel = new CommentModel();
                 $this->uploadmodel = new UploadModel();
+                $this->usermodel = new UserModel();
+                $this->followmodel = new FollowModel();
+                $this->likemodel = new LikeModel();
 	}
 	
 	public function index()
@@ -82,6 +91,14 @@ class EventController extends BaseController
 	{
             $eventdata = $this->eventmodel->getsingle('*', array('id' => $id));
             $event= $this->model2data($eventdata);
+            $this->eventmodel->update(array('viewnum'=>$event['viewnum']+1), array('id'=>$event['id']));
+            $likearr = array(
+                'uid' => $this->author['id'],
+                'targettype' => 'event',
+                'targetid' => $event['id']
+            );
+            $likenum = $this->likemodel->count(array('and'=>$likearr));
+            $event['isliked'] = $likenum?1:0;
             return $this->go('event', $event);
             
 	}
@@ -91,11 +108,33 @@ class EventController extends BaseController
             $events = $this->eventmodel->getlist('*', []);
             foreach ($events as $event)
             {
-                
                 $eventlist[] = $this->data2model($event);
             }
             return $this->go('event list', $eventlist);
-            
+        }
+        
+        public function showMyList()
+        {
+            $events = $this->eventmodel->getlist('*', array('uid'=>$this->author['id']));
+            $eventlist = array();
+            foreach ($events as $event)
+            {
+                $eventlist[] = $this->data2model($event);
+            }
+            return $this->go('event list', $eventlist);
+        }
+        
+        public function showFollowList()
+        {
+            $follows = $this->followmodel->getlist('*', array('targetuid'=>$this->author['id']));
+            $followids = Util::getValueByKeys($follows, 'uid');
+            $events = $this->eventmodel->getlist('*', array('uid'=>$followids));
+            $eventlist = array();
+            foreach ($events as $event)
+            {
+                $eventlist[] = $this->data2model($event);
+            }
+            return $this->go('event list', $eventlist);
         }
 	
 	public function edit($id)
@@ -128,18 +167,30 @@ class EventController extends BaseController
                 $upload = $this->uploadmodel->getEntity(array('id'=>$model['poster']));
                 $model['poster'] = $this->uploadmodel->server_host.$upload['path'];
             }
+            $user = $this->usermodel->getEntity(array('id'=>$model['uid']));
+            $avatar = $this->uploadmodel->getAvatar($user['avatar']);
+            $author = array(
+                'uid' => $user['id'],
+                'name' => user['name'],
+                'avatar' => $avatar
+            );
             $event = array(
                 'id' => $model['id'],
                 'uid' => $model['uid'],
+                'user' => $author,
                 'poster' => $model['poster'],
                 'title' => $model['title'],
-                'dateline' => $model['dataline'],
+                'dateline' => $model['dateline'],
                 'content' => $model['content'],
                 'contact' => $model['contact'],
                 'fee' => $model['fee'],
-                'place' => $model['place'],
+                'location' => Location::getPlace($model['location_prov'], $model['location_city'], $model['location_detail']),
                 'starttime' => $model['starttime'],
-                'endtime' => $model['endtime']
+                'endtime' => $model['endtime'],
+                'viewnum' => $model['viewnum'],
+                'likenum' => $model['likenum']
+                    
+                    
             );
             return $event;
         }
@@ -149,12 +200,15 @@ class EventController extends BaseController
             $event = array(
                 'uid' => $data['uid'],
                 'poster' => $data['poster'],
-                'title' => $data['title'],
+                'title' => trim($data['theme'].' '.$data['title']),
                 'dateline' => $data['dateline'],
                 'content' => $data['content'],
                 'contact' => $data['contact'],
                 'fee' => $data['fee'],
                 'place' => $data['place'],
+                'location_prov' => $data['location_prov'],
+                'location_city' => $data['location_city'],
+                'location_detail' => $data['location_detail'],
                 'starttime' => $data['starttime'],
                 'endtime' => $data['endtime']
             );

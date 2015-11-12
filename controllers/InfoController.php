@@ -95,7 +95,8 @@ class InfoController extends BaseController
             foreach ($smslist as $smssingle){
                 $valicode[] = array(
                     'name' => '手机号: '.$smssingle['mobile'],
-                    'value' =>  '验证码: '.$smssingle['valicode']
+                    'value' =>  '验证码: '.$smssingle['valicode'],
+                    'type' => '类型: '.$smssingle['type']
                 );
             }
             $info = array(
@@ -133,6 +134,8 @@ class InfoController extends BaseController
                     array('name'=>'dateline', 'value'=>'活动发布时间'),
                     array('name'=>'starttime', 'value'=>'活动开始时间'),
                     array('name'=>'endtime', 'value'=>'活动结束时间'),
+                    array('name'=>'likenum', 'value'=>'活动被赞个数'),
+                    array('name'=>'commentnum', 'value'=>'活动被评论个数'),
                 ),
             );
             return $this->go("eventcreate", $info);
@@ -163,6 +166,8 @@ class InfoController extends BaseController
                     array('name'=>'dateline', 'value'=>'活动发布时间'),
                     array('name'=>'starttime', 'value'=>'活动开始时间'),
                     array('name'=>'endtime', 'value'=>'活动结束时间'),
+                    array('name'=>'likenum', 'value'=>'活动被赞个数'),
+                    array('name'=>'commentnum', 'value'=>'活动被评论个数'),
                 ),
             );
             return $this->go("eventupdate", $info);
