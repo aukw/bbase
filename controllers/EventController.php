@@ -35,6 +35,7 @@ include_once $_SERVER['DOCUMENT_ROOT'].'/models/CommentModel.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/models/UploadModel.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/models/UserModel.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/models/FollowModel.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/utils/Location.php';
 
 
 class EventController extends BaseController
@@ -77,7 +78,6 @@ class EventController extends BaseController
                     'dateline' => time()
                 );
                 $uploadid = $this->uploadmodel->insert($upload);
-                
             }   
             $event['uid'] = $this->author['id'];
             $event['poster'] = $uploadid;
@@ -179,6 +179,7 @@ class EventController extends BaseController
                 'uid' => $model['uid'],
                 'user' => $author,
                 'poster' => $model['poster'],
+                'theme' => $model['theme'],
                 'title' => $model['title'],
                 'dateline' => $model['dateline'],
                 'content' => $model['content'],
@@ -200,7 +201,8 @@ class EventController extends BaseController
             $event = array(
                 'uid' => $data['uid'],
                 'poster' => $data['poster'],
-                'title' => trim($data['theme'].' '.$data['title']),
+                'theme' => trim($data['theme']),
+                'title' => trim($data['title']),
                 'dateline' => $data['dateline'],
                 'content' => $data['content'],
                 'contact' => $data['contact'],

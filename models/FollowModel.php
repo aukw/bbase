@@ -11,7 +11,7 @@ class FollowModel extends BaseModel
     function __construct()
     {
         $this->_DB_TABLE_NAME = 'follow';
-        $this->_MODEL = array('id','targetid','targetname','uid','name','dateline');
+        $this->_MODEL = array('id','targetuid','targetname','uid','name','dateline');
         parent::__construct();
     }
 }

@@ -10,7 +10,7 @@ class VistorModel extends BaseModel
 {
     function __construct()
     {
-        $this->_DB_TABLE_NAME = 'vistor';
+        $this->_DB_TABLE_NAME = 'visitor';
         $this->_MODEL = array('id','targetid','targetname','uid','name','dateline');
         parent::__construct();
     }

@@ -195,14 +195,17 @@ class InfoController extends BaseController
                 'return' => array(
                     array('name'=>'id', 'value'=>'活动ID'),
                     array('name'=>'user', 'value'=>'User模型'),
+                    array('name'=>'theme', 'value'=>'活动主题'),
                     array('name'=>'title', 'value'=>'活动标题'),
                     array('name'=>'content', 'value'=>'活动内容'),
                     array('name'=>'contact', 'value'=>'联系方式'),
                     array('name'=>'fee', 'value'=>'活动费用'),
-                    array('name'=>'place', 'value'=>'活动地点'),
+                    array('name'=>'location', 'value'=>'活动地点'),
                     array('name'=>'dateline', 'value'=>'活动发布时间'),
                     array('name'=>'starttime', 'value'=>'活动开始时间'),
                     array('name'=>'endtime', 'value'=>'活动结束时间'),
+                    array('name'=>'likenum', 'value'=>'赞的个数'),
+                    array('name'=>'commentnum', 'value'=>'评论的个数'),
                 ),
             );
             return $this->go("eventdetail", $info);
@@ -376,9 +379,17 @@ class InfoController extends BaseController
                 'method' => Config::$METHOD_GET,
                 'params' => '',
                 'return' => array(
-                    array('name'=>'user', 'value'=>'{"uid","name"}')
+                    array('name'=>'说明', 'value'=>'返回的就是一个user类，内容包括下面的字段'),
+                    array('name'=>'uid', 'value'=>'用户ID'),
+                    array('name'=>'name', 'value'=>'用户昵称'),
+                    array('name'=>'signature', 'value'=>'个性签名'),
+                    array('name'=>'intro', 'value'=>'个人简介'),
+                    array('name'=>'avatar', 'value'=>'头像'),
+                    array('name'=>'follownum', 'value'=>'我的关注人数'),
+                    array('name'=>'fannum', 'value'=>'我的粉丝人数'),
                 )
             );
+            
             return $this->go('people profile ', $info);
         }
         
@@ -391,7 +402,7 @@ class InfoController extends BaseController
                     array('name'=>'flyimage[0]', 'value'=>'用户头像文件，上传前压缩，max_size:300k, max_width=max_height:1280')
                 ),
                 'return' => array(
-                    array('name'=>'null:result', 'value'=>'头像地址')
+                    array('name'=>'http://www.fly.com/avatar.jpg', 'value'=>'头像地址')
                 )
             );
             return $this->go('people profile avatar', $info);
@@ -403,13 +414,11 @@ class InfoController extends BaseController
                 'url' => '/api/profile/field',
                 'method' => Config::$METHOD_PUT,
                 'params' => array(
-                    array('name'=>'nickname', 'value'=>'昵称'),
+                    array('name'=>'name', 'value'=>'昵称'),
                     array('name'=>'signature', 'value'=>'个性签名'),
                     array('name'=>'intro', 'value'=>'个人简介'),
                 ),
-                'return' => array(
-                    array('name'=>'null:result', 'value'=>'头像地址')
-                )
+                'return' => ''
             );
             return $this->go('people profile avatar', $info);
         }
