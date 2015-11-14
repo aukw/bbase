@@ -34,6 +34,7 @@ include_once $_SERVER['DOCUMENT_ROOT'].'/models/EventModel.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/models/CommentModel.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/models/UploadModel.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/models/UserModel.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/models/LikeModel.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/models/FollowModel.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/utils/Location.php';
 
@@ -171,7 +172,7 @@ class EventController extends BaseController
             $avatar = $this->uploadmodel->getAvatar($user['avatar']);
             $author = array(
                 'uid' => $user['id'],
-                'name' => user['name'],
+                'name' => $user['name'],
                 'avatar' => $avatar
             );
             $event = array(
