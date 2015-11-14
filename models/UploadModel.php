@@ -84,5 +84,35 @@ class UploadModel extends BaseModel
         }
     }
     
+    public function getAvatarByUid($uid)
+    {
+        if($uid)
+        {
+            $avatarpath = $this->db->query("select upload.path from ".$this->getTableName()." upload where upload.id = (select user.avatar from ".$this->getTableName('user')." as user where user.id=$uid)" )->fetchAll();
+            if($avatarpath){
+                return $this->server_host.$avatarpath[0]['path'];
+            }else{
+                return '';
+            }
+        }else{
+            return '';
+        }
+    }
+    
+    public function getAvatarByUids($uids)
+    {
+        if(is_array($uids))
+        {
+            $avatars = $this->db->query("select upload.uid, upload.path from ".$this->getTableName()." upload "
+                    . "where upload.id in (select user.avatar from ".$this->getTableName('user')." as user "
+                    . "where user.id in (".  join(',', $uids)."))" )->fetchAll();
+            foreach ($avatars as $avatar)
+            {
+                $userface[$avatar['uid']] = $this->server_host.$avatar['path'];
+            }
+            return $userface;
+        }
+    }
+    
     
 }

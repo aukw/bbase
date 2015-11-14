@@ -206,6 +206,7 @@ class InfoController extends BaseController
                     array('name'=>'endtime', 'value'=>'活动结束时间'),
                     array('name'=>'likenum', 'value'=>'赞的个数'),
                     array('name'=>'commentnum', 'value'=>'评论的个数'),
+                    array('name'=>'isliked', 'value'=>'登录用户是否赞过该活动（仅在详情接口中有这个字段）'),
                 ),
             );
             return $this->go("eventdetail", $info);

@@ -68,13 +68,15 @@ class BaseModel extends Base
     }
     public function query($query)
     {
-        $data = $database->query($query)->fetchAll();
+        $data = $this->db->query($query)->fetchAll();
         return $data;
     }
-    public function getTableName()
+    public function getTableName($tablename='')
     {
-        return Config::$mysql_tablepre.$this->_DB_TABLE_NAME;
+        $tablename = $tablename?$tablename:$this->_DB_TABLE_NAME;
+        return Config::$mysql_tablepre.$tablename;
     }
+    
     
     public function count($where)
     {

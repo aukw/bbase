@@ -29,8 +29,7 @@
  */
 
 include_once $_SERVER['DOCUMENT_ROOT'].'/controllers/BaseController.php';
-include_once $_SERVER['DOCUMENT_ROOT'].'/utils/region.php';
-include_once $_SERVER['DOCUMENT_ROOT'].'/utils/Location.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/models/uploadmodel.php';
 
 class TestController extends BaseController
 {
@@ -43,9 +42,12 @@ class TestController extends BaseController
 
 	public function test()
 	{
+            
             echo '0';
-            echo  Location::getPlace('11', '03', 'place');
             echo '1';
+            $upload = new UploadModel();
+            //echo $upload->getAvatarByUid(2);
+            var_dump( $upload->getAvatarByUids(array("1","2","3","4")));
             
             return 'good';
         }

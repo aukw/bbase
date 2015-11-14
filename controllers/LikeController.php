@@ -31,14 +31,18 @@
 
 include_once $_SERVER['DOCUMENT_ROOT'].'/controllers/BaseController.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/models/LikeModel.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/models/UploadModel.php';
 
 
-class CommentController extends BaseController
+class LikeController extends BaseController
 {
 	public $likemodel;
+        public $uploadmodel;
+        
 	public function __construct() {
 		parent::__construct();
 		$this->likemodel = new LikeModel();
+                $this->uploadmodel = new UploadModel();
 	}
 		
 	public function store($targettype, $targetid)
@@ -52,7 +56,7 @@ class CommentController extends BaseController
             }
             if($check){
                 return $this->go('like ok', $check);
-            }{
+            }else{
                 return $this->warn('like faild');
             }
 	}
@@ -98,6 +102,7 @@ class CommentController extends BaseController
                 'uid' => $this->author['id']
             );
             $like = $this->likemodel->getEntity(array('AND'=>$where));
+            
             if($like){
                 $check = $like['id'];
             }
@@ -109,7 +114,8 @@ class CommentController extends BaseController
         {
             $data['user'] = array(
                 'uid' => $data['uid'],
-                'name' => $data['name']
+                'name' => $data['name'],
+                'avatar' => $this->uploadmodel->getAvatarByUid($uid)
             );
             return $data;
         }

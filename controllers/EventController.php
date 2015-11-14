@@ -84,8 +84,12 @@ class EventController extends BaseController
             $event['poster'] = $uploadid;
             $event['dateline'] = time();
             $id = $this->eventmodel->insert($event);
-            $event['id'] = $id;
-            return $this->go('event stored', $event);
+            if($id){
+                $event['id'] = $id;
+                return $this->show($id);
+            }else{
+                return $this->warn("event save failed");
+            }
 	}
 	
 	public function show($id)
@@ -101,7 +105,6 @@ class EventController extends BaseController
             $likenum = $this->likemodel->count(array('and'=>$likearr));
             $event['isliked'] = $likenum?1:0;
             return $this->go('event', $event);
-            
 	}
         
         public function showList()
@@ -191,8 +194,6 @@ class EventController extends BaseController
                 'endtime' => $model['endtime'],
                 'viewnum' => $model['viewnum'],
                 'likenum' => $model['likenum']
-                    
-                    
             );
             return $event;
         }
@@ -201,7 +202,8 @@ class EventController extends BaseController
         {
             $event = array(
                 'uid' => $data['uid'],
-                'poster' => $data['poster'],
+                'user' => array('uid' => $data['uid'], 'name'=> $data['name'], 'avatar'=>  $this->uploadmodel->getAvatarByUid($data['uid'])),
+                'poster' => $this->uploadmodel->getAvatar($data['poster']),
                 'theme' => trim($data['theme']),
                 'title' => trim($data['title']),
                 'dateline' => $data['dateline'],
@@ -212,8 +214,11 @@ class EventController extends BaseController
                 'location_prov' => $data['location_prov'],
                 'location_city' => $data['location_city'],
                 'location_detail' => $data['location_detail'],
+                'location' => Location::getPlace($data['location_prov'], $data['location_city'], $data['location_detail']),
                 'starttime' => $data['starttime'],
-                'endtime' => $data['endtime']
+                'endtime' => $data['endtime'],
+                'viewnum' => $data['viewnum'],
+                'likenum' => $data['likenum']
             );
             if(isset($data['id'])){
                 $event['id'] = $data['id'];
