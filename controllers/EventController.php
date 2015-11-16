@@ -202,7 +202,7 @@ class EventController extends BaseController
         {
             $event = array(
                 'uid' => $data['uid'],
-                'user' => array('uid' => $data['uid'], 'name'=> $data['name'], 'avatar'=>  $this->uploadmodel->getAvatarByUid($data['uid'])),
+                //'user' => array('uid' => $data['uid'], 'name'=> $data['name'], 'avatar'=>  $this->uploadmodel->getAvatarByUid($data['uid'])),
                 'poster' => $this->uploadmodel->getAvatar($data['poster']),
                 'theme' => trim($data['theme']),
                 'title' => trim($data['title']),
@@ -214,7 +214,7 @@ class EventController extends BaseController
                 'location_prov' => $data['location_prov'],
                 'location_city' => $data['location_city'],
                 'location_detail' => $data['location_detail'],
-                'location' => Location::getPlace($data['location_prov'], $data['location_city'], $data['location_detail']),
+                //'location' => Location::getPlace($data['location_prov'], $data['location_city'], $data['location_detail']),
                 'starttime' => $data['starttime'],
                 'endtime' => $data['endtime'],
                 'viewnum' => $data['viewnum'],
