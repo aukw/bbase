@@ -70,6 +70,7 @@ class HomeController extends BaseController
                 array('name' => '用户详情','module' => 'profile'),
                 array('name' => '修改头像','module' => 'avatar'),
                 array('name' => '修改其他属性','module' => 'field'),
+                array('name' => '申请成为歌手','module' => 'certify'),
                 
             );
             return View::load('api',array('apilist' => $apilist));

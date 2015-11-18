@@ -424,6 +424,19 @@ class InfoController extends BaseController
             return $this->go('people profile avatar', $info);
         }
         
+        public function certify()
+        {
+            $info = array(
+                'url' => '/api/profile/certify',
+                'method' => Config::$METHOD_PUT,
+                'params' => '',
+                'return' => array(
+                    array('name'=>'无Result', 'value'=>''),
+                )
+            );
+            return $this->go('people profile avatar', $info);
+        }
+        
 //	public function index()
 //	{
 //		$keywords = $_GET['keywords'];

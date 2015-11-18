@@ -12,7 +12,7 @@ class SingerModel extends BaseModel
     function __construct()
     {
         $this->_DB_TABLE_NAME = 'singer';
-        $this->_MODEL = array('id','uid','name','level','realname','idcard','location_prov','location_city', 'location_detail', 'statement', 'dateline', 'replydateline');
+        $this->_MODEL = array('id','uid','name','sex','level','realname','idcard', 'idcardno','location_prov','location_city', 'location_detail', 'statement', 'dateline', 'replydateline');
         parent::__construct();
       # code...
     }
