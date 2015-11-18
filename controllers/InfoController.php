@@ -429,12 +429,21 @@ class InfoController extends BaseController
             $info = array(
                 'url' => '/api/profile/certify',
                 'method' => Config::$METHOD_PUT,
-                'params' => '',
+                'params' => array(
+                    array('name'=>'level', 'value'=>'0申请中，1已同意，2被拒绝，默认是0，不需要客户端给出该值'),
+                    array('name'=>'realname', 'value'=>'直接姓名'),
+                    array('name'=>'idcard', 'value'=>'身份证照片上传，可选'),
+                    array('name'=>'idcardno', 'value'=>'身份证号码，18位'),
+                    array('name'=>'location_prov', 'value'=>'省份代码'),
+                    array('name'=>'location_city', 'value'=>'城市代码'),
+                    array('name'=>'location_detail', 'value'=>'详细地址'),
+                    array('name'=>'statement', 'value'=>'申请理由'),
+                ),
                 'return' => array(
-                    array('name'=>'无Result', 'value'=>''),
+                    array('name'=>'结果', 'value'=>'1 成功， 2 不成功'),
                 )
             );
-            return $this->go('people profile avatar', $info);
+            return $this->go('people profile certify', $info);
         }
         
 //	public function index()
