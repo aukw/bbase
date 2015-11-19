@@ -150,9 +150,7 @@ class EventController extends BaseController
 	{
             $data = $this->parmall();
             $event = $this->data2model($data);
-            $poster = $this->file('poster');
             $event['uid'] = $this->author['uid'];
-            $event['poster'] = $poster?$poster:'';
             $this->eventmodel->update($event, array('id'=>$id));
             return $this->go('event updated');
             
@@ -192,8 +190,8 @@ class EventController extends BaseController
                 'location' => Location::getPlace($model['location_prov'], $model['location_city'], $model['location_detail']),
                 'starttime' => $model['starttime'],
                 'endtime' => $model['endtime'],
-                'viewnum' => $model['viewnum'],
-                'likenum' => $model['likenum']
+                'viewnum' => $model['viewnum']?$model['viewnum']:0,
+                'likenum' => $model['likenum']?$model['viewnum']:0
             );
             return $event;
         }
