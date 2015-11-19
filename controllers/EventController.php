@@ -94,7 +94,7 @@ class EventController extends BaseController
 	
 	public function show($id)
 	{
-            $eventdata = $this->eventmodel->getsingle('*', array('id' => $id));
+            $eventdata = $this->eventmodel->getEntity(array('id' => $id));
             $event= $this->model2data($eventdata);
             $this->eventmodel->update(array('viewnum'=>$event['viewnum']+1), array('id'=>$event['id']));
             $likearr = array(
