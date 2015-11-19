@@ -151,9 +151,12 @@ class EventController extends BaseController
             $data = $this->parmall();
             $event = $this->data2model($data);
             $event['uid'] = $this->author['uid'];
-            $this->eventmodel->update($event, array('id'=>$id));
-            return $this->go('event updated');
-            
+            $result = $this->eventmodel->update($event, array('id'=>$id));
+            if($result){
+                return $this->show($id);
+            }else{
+                return $this->warn('event updating failed');
+            }
 	}
 	
 	public function delete($id)
