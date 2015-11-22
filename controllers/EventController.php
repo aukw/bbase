@@ -96,7 +96,7 @@ class EventController extends BaseController
 	{
             $eventdata = $this->eventmodel->getEntity(array('id' => $id));
             $event= $this->model2data($eventdata);
-            $this->eventmodel->update(array('viewnum'=>$event['viewnum']+1), array('id'=>$event['id']));
+            $this->eventmodel->update(array('viewnum'=>$event['viewnum']+1), array('id'=>$id));
             $likearr = array(
                 'uid' => $this->author['id'],
                 'targettype' => 'event',
@@ -149,8 +149,10 @@ class EventController extends BaseController
 	public function update($id)
 	{
             $data = $this->parmall();
+            var_dump($data);
             $event = $this->data2model($data);
-            $event['uid'] = $this->author['uid'];
+            $event['uid'] = $this->author['id'];
+            var_dump($event);
             $result = $this->eventmodel->update($event, array('id'=>$id));
             if($result){
                 return $this->show($id);
