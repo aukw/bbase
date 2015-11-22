@@ -96,7 +96,7 @@ class EventController extends BaseController
 	{
             $eventdata = $this->eventmodel->getEntity(array('id' => $id));
             $event= $this->model2data($eventdata);
-            $this->eventmodel->update(array('viewnum'=>$event['viewnum']+1), array('id'=>$id));
+            $this->eventmodel->update(array('viewnum[+]'=>1), array('id'=>$id));
             $likearr = array(
                 'uid' => $this->author['id'],
                 'targettype' => 'event',
@@ -220,8 +220,8 @@ class EventController extends BaseController
                 //'location' => Location::getPlace($data['location_prov'], $data['location_city'], $data['location_detail']),
                 'starttime' => $data['starttime'],
                 'endtime' => $data['endtime'],
-                'viewnum' => $data['viewnum'],
-                'likenum' => $data['likenum']
+                'viewnum' => $data['viewnum']?$data['viewnum']:0,
+                'likenum' => $data['likenum']?$data['likenum']:0
             );
             if(isset($data['id'])){
                 $event['id'] = $data['id'];
