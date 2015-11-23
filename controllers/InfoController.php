@@ -120,7 +120,9 @@ class InfoController extends BaseController
                     array('name'=>'content', 'value'=>'活动内容'),
                     array('name'=>'contact', 'value'=>'联系方式'),
                     array('name'=>'fee', 'value'=>'活动费用'),
-                    array('name'=>'place', 'value'=>'活动地点'),
+                    array('name'=>'location_prov', 'value'=>'活动地点，省份2位数字，可不用'),
+                    array('name'=>'location_city', 'value'=>'活动地点，城市2位数字，可不用'),
+                    array('name'=>'location_detail', 'value'=>'活动地点，详细地点'),
                     array('name'=>'starttime', 'value'=>'活动开始时间'),
                     array('name'=>'endtime', 'value'=>'活动结束时间'),
                 ),
@@ -132,12 +134,12 @@ class InfoController extends BaseController
                     array('name'=>'content', 'value'=>'活动内容'),
                     array('name'=>'contact', 'value'=>'联系方式'),
                     array('name'=>'fee', 'value'=>'活动费用'),
-                    array('name'=>'place', 'value'=>'活动地点'),
+                    array('name'=>'location', 'value'=>'活动地点'),
                     array('name'=>'dateline', 'value'=>'活动发布时间'),
                     array('name'=>'starttime', 'value'=>'活动开始时间'),
                     array('name'=>'endtime', 'value'=>'活动结束时间'),
                     array('name'=>'likenum', 'value'=>'活动被赞个数'),
-                    array('name'=>'commentnum', 'value'=>'活动被评论个数'),
+                    array('name'=>'viewnum', 'value'=>'活动被评论个数'),
                 ),
             );
             return $this->go("eventcreate", $info);
@@ -169,7 +171,7 @@ class InfoController extends BaseController
                     array('name'=>'starttime', 'value'=>'活动开始时间'),
                     array('name'=>'endtime', 'value'=>'活动结束时间'),
                     array('name'=>'likenum', 'value'=>'活动被赞个数'),
-                    array('name'=>'commentnum', 'value'=>'活动被评论个数'),
+                    array('name'=>'viewnum', 'value'=>'活动被评论个数'),
                 ),
             );
             return $this->go("eventupdate", $info);
