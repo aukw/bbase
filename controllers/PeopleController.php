@@ -27,7 +27,7 @@ class PeopleController extends BaseController
             $this->singermodel = new SingerModel();
     }
     
-    public function profile($uid)
+    public function profile($uid=0)
     {
         $uid = ($uid)?$uid:$this->author['id'];
         $where = array(

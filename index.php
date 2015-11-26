@@ -31,7 +31,7 @@ Flight::route('POST /api/follows', function(){ router('FollowController', 'follo
 Flight::route('DELETE /api/follows/@followid', function($followid){ router('FollowController', 'delete', $followid);});
 
 
-Flight::route('GET /api/people', function(){ router('PeopleController', 'profile', 0);});
+Flight::route('GET /api/people', function(){ router('PeopleController', 'profile', $uid=0);});
 Flight::route('GET /api/people/@uid', function($uid){ router('PeopleController', 'profile', $uid);});
 Flight::route('POST /api/profile/avatar', function(){ router('PeopleController', 'avatar');});
 Flight::route('POST /api/profile/certify', function(){ router('PeopleController', 'certify');});
