@@ -37,6 +37,7 @@ class PeopleController extends BaseController
         if($user['id']){
             $this->visit($uid);
             $user['uid'] = $uid;
+            $user['avatar'] = $this->uploadmodel->getAvatarByUid($uid);
             return $this->go('user profile', $user);
         }else{
             return $this->warn('user no exist');
