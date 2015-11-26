@@ -29,6 +29,7 @@ class PeopleController extends BaseController
     
     public function profile($uid)
     {
+        $uid = ($uid)?$uid:$this->author['id'];
         $where = array(
             'id' => $uid
         );

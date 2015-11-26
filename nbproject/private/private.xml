@@ -3,14 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/var/www/bb/controllers/EventController.php</file>
             <file>file:/var/www/bb/index.php</file>
-            <file>file:/var/www/bb/controllers/NoticeController.php</file>
+            <file>file:/var/www/bb/controllers/BaseController.php</file>
+            <file>file:/var/www/bb/models/ReportModel.php</file>
+            <file>file:/var/www/bb/models/UserModel.php</file>
             <file>file:/var/www/bb/controllers/InfoController.php</file>
-            <file>file:/var/www/bb/models/SingerModel.php</file>
             <file>file:/var/www/bb/models/BaseModel.php</file>
+            <file>file:/var/www/bb/controllers/UserController.php</file>
             <file>file:/var/www/bb/controllers/PeopleController.php</file>
-            <file>file:/var/www/bb/controllers/CommentController.php</file>
-            <file>file:/var/www/bb/controllers/HomeController.php</file>
         </group>
     </open-files>
 </project-private>
