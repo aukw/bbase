@@ -1,6 +1,6 @@
 <?php
 
-require 'flight/Flight.php';
+require_once 'flight/Flight.php';
 
 
 
@@ -52,6 +52,7 @@ Flight::route('GET /review/@id', function($id){router('ReviewController', 'show'
 
 
 Flight::route('POST /review', function(){router('ReviewController', 'store');});
+Flight::route('PUT /api/test', function(){router('TestController', 'putt');});
 
 
 Flight::route('GET /api/test', function(){router('TestController', 'test');});
@@ -63,8 +64,11 @@ Flight::start();
 
 function router($controller, $method, $parm1='', $parm2='', $parm3='')
 {
+
+        //var_dump($parms);
 	include_once './controllers/'.$controller.'.php';
 	$entity = new $controller();
+        //$entity->setParms($parms);
 	$parm = array($parm1, $parm2, $parm3);
 	$parmcount = count(array_filter($parm));
 	if($parmcount == 0){

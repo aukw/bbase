@@ -33,7 +33,10 @@ class Util
                 $result = array();
                 foreach($keys as $key)
                 {
-                    $result[$key] = $value[$key];
+                    if(isset($value[$key]))
+                    {
+                        $result[$key] = $value[$key];
+                    }
                 }
                 $results[] = $result;
             }
@@ -42,6 +45,20 @@ class Util
                 $results[] = $value[$key];
             }
         }
-        return $value;
+        return $results;
+    }
+    
+    public static function mapKeys($values, $keys)
+    {        
+//        var_dump($values);
+//        var_dump($keys);
+        $result = array();
+        foreach ($keys as $key)
+        {
+            if(isset($values[$key])){
+                $result[$key] = $values[$key];
+            }
+        }
+        return $result;
     }
 }

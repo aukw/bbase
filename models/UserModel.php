@@ -11,7 +11,7 @@ class UserModel extends BaseModel
     function __construct()
     {
         $this->_DB_TABLE_NAME = 'user';
-        $this->_MODEL = array('id','name','signature','intro','password','email','mobile','avatar','follownum','fannum','created_at','updated_at');
+        $this->_MODEL = array('id','name','signature','intro','password','email','mobile','avatar','follownum','fannum','issinger','created_at','updated_at');
         parent::__construct();
       # code...
     }

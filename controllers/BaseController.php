@@ -18,6 +18,7 @@ class BaseController extends Base
         public $parms;
 	public $login;
 	public $author;
+        public $allparms;
     public function __construct() {
         parent::__construct();
 		if($_GET['token']){
@@ -33,21 +34,48 @@ class BaseController extends Base
 			}
 		}
     }
+    
+    public function setParms($parms)
+    {
+        //var_dump($parms);
+        $this->allparms = $parms;
+        //var_dump($this->allparms);
+    }
 
     public static function parm($key)
     {
-        if(isset($_POST[$key])){
-            $parm = $_POST[$key];
-        }else{
-            $parm = $_POST[$key];
+        $putvalues = explode('&',Flight::request()->getBody());
+        $putparms = array();
+        if($putvalues)
+        {
+            foreach ($putvalues as $value)
+            {
+                $parmnow = explode('=', $value);
+                $putparms[$parmnow[0]] = $parmnow[1];
+            }
         }
-        return $parm;
+        $parms = array_merge(array_values((array)(Flight::request()->query))[0], array_values(((array)Flight::request()->data))[0], $putparms);
+        
+        return $parms[$key];
     }
     
     
-    public static function parmall()
+    public function parmall()
     {
-        return array_merge($_POST, $_GET);
+        
+        $putvalues = explode('&',Flight::request()->getBody());
+        $putparms = array();
+        if($putvalues)
+        {
+            foreach ($putvalues as $value)
+            {
+                $parmnow = explode('=', $value);
+                $putparms[$parmnow[0]] = $parmnow[1];
+            }
+        }
+        $parms = array_merge(array_values((array)(Flight::request()->query))[0], array_values(((array)Flight::request()->data))[0], $putparms);
+        
+        return $parms;
     }
     
     public static function file($key)

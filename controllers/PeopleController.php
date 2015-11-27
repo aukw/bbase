@@ -38,6 +38,15 @@ class PeopleController extends BaseController
             $this->visit($uid);
             $user['uid'] = $uid;
             $user['avatar'] = $this->uploadmodel->getAvatarByUid($uid);
+            $singer = $this->singermodel->getEntity(array('uid'=>$this->author['id']));
+            $singerstatus = 0;
+            if($singer['level'])
+            {
+                $singerstatus = 2;
+            }elseif($singer['idcardno']){
+                $singerstatus = 1;
+            }
+            $user['singer'] = $singerstatus;
             return $this->go('user profile', $user);
         }else{
             return $this->warn('user no exist');
@@ -109,6 +118,8 @@ class PeopleController extends BaseController
             }
         }
         $singer = array(
+            'uid' => $this->author['id'],
+            'name' => $this->author['name'],
             'realname' => $realname,
             'sex' => $sex,
             'location_prov' => $location_prov,
@@ -119,6 +130,8 @@ class PeopleController extends BaseController
             'statement' => $statement,
             'level' => 0,
         );
+        
+        
         $singerid = $this->singermodel->insert($singer);
         if($singerid){
             return $this->go(Lang::$singer_apply_ok);
@@ -156,7 +169,10 @@ class PeopleController extends BaseController
     public function field()
     {
         $parms = parent::parmall();
-        $fields = Util::getValueByKeys($parms, $this->usermodel->_MODEL);
+//        var_dump($parms);
+//        var_dump($this->usermodel->getModelKeys());
+        $fields = Util::mapKeys($parms, $this->usermodel->getModelKeys());
+//        var_dump($fields);
         if(count($fields))
         {
             $this->usermodel->update($fields, array('id'=>$this->author['id']));

@@ -42,7 +42,7 @@ class TestController extends BaseController
 
 	public function test()
 	{
-            
+            var_dump($this->allparms);
             echo '0';
             echo '1';
             $upload = new UploadModel();
@@ -52,6 +52,10 @@ class TestController extends BaseController
             return 'good';
         }
 
+        public function putt()
+        {
+            var_dump($this->allparms);
+        }
 	public function testPost()
 	{
 		$parm  = $_POST['parm'];
