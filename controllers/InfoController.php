@@ -1,4 +1,4 @@
-<?php
+d<?php
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -442,6 +442,38 @@ class InfoController extends BaseController
                     array('name'=>'location_city', 'value'=>'城市代码'),
                     array('name'=>'location_detail', 'value'=>'详细地址'),
                     array('name'=>'statement', 'value'=>'申请理由'),
+                ),
+                'return' => array(
+                    array('name'=>'结果', 'value'=>'1 成功， 2 不成功'),
+                )
+            );
+            return $this->go('people profile certify', $info);
+        }
+        public function like()
+        {
+            $info = array(
+                'url' => '/api/@type/@id/likes',
+                'method' => Config::$METHOD_POST,
+                'params' => array(
+                    array('name'=>'@type', 'value'=>'events'),
+                    array('name'=>'@id', 'value'=>'event id'),
+                ),
+                'return' => array(
+                    array('name'=>'结果', 'value'=>'1 成功， 2 不成功'),
+                )
+            );
+            return $this->go('people profile certify', $info);
+        }
+        
+        
+        public function report()
+        {
+            $info = array(
+                'url' => '/api/@type/@id/likes',
+                'method' => Config::$METHOD_POST,
+                'params' => array(
+                    array('name'=>'@type', 'value'=>'events'),
+                    array('name'=>'@id', 'value'=>'event id'),
                 ),
                 'return' => array(
                     array('name'=>'结果', 'value'=>'1 成功， 2 不成功'),

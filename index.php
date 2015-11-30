@@ -26,6 +26,7 @@ Flight::route('PUT /api/events/@eventid', function($eventid){ router('EventContr
 
 Flight::route('GET /api/fans', function(){ router('PeopleController', 'getFanList');});
 Flight::route('GET /api/follows', function(){ router('FollowController', 'getList');});
+Flight::route('POST /api/follows', function(){ router('FollowController', 'follow');});
 Flight::route('GET /api/visitors', function(){ router('PeopleController', 'getVistorList');});
 Flight::route('POST /api/follows', function(){ router('FollowController', 'follow');});
 Flight::route('DELETE /api/follows/@followid', function($followid){ router('FollowController', 'delete', $followid);});
@@ -51,6 +52,7 @@ Flight::route('GET /review/edit/@id', function($id){router('ReviewController', '
 Flight::route('GET /review/@id', function($id){router('ReviewController', 'show', $id);});
 
 
+Flight::route('POST /api/report', function(){router('ReportController', 'report');});
 Flight::route('POST /review', function(){router('ReviewController', 'store');});
 Flight::route('PUT /api/test', function(){router('TestController', 'putt');});
 

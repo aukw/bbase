@@ -71,6 +71,8 @@ class HomeController extends BaseController
                 array('name' => '修改头像','module' => 'avatar'),
                 array('name' => '修改其他属性','module' => 'field'),
                 array('name' => '申请成为歌手','module' => 'certify'),
+                array('name' => '赞/取消赞','module' => 'like'),
+                array('name' => '举报','module' => 'report'),
                 
             );
             return View::load('api',array('apilist' => $apilist));
