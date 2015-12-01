@@ -14,7 +14,7 @@ class EventModel extends BaseModel
         $this->_MODEL = array('id','poster','title','dateline','content', 
             'contact', 'fee', 'place', 'placecodepo','starttime', 'endtime', 
             'uid', 'name', 'likenum', 'commentnum', 'location_prov', 
-            'location_city', 'location_detail');
+            'location_city', 'location_detail', 'theme');
         parent::__construct();
       # code...
     }

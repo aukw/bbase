@@ -8,16 +8,20 @@
 
 include_once $_SERVER['DOCUMENT_ROOT'].'/controllers/BaseController.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/models/FollowModel.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/models/UserModel.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/models/UploadModel.php';
 
 class FollowController extends BaseController
 {
     
     public $followmodel;
     public $usermodel;
+    public $uploadmodel;
     public function __construct() {
             parent::__construct();
             $this->followmodel = new FollowModel();
             $this->usermodel = new UserModel;
+            $this->uploadmodel = new UploadModel();
     }
     
     /**
@@ -55,21 +59,27 @@ class FollowController extends BaseController
     {
         $where = array('uid' => $this->author['id']);
         $follows = $this->followmodel->getlist('*', $where);
-        $users = $this->usermodel->getlist('*', array('uid'=>  Util::getValueByKeys($follows, 'targetuid')));
-        $followids = Util::getValueByKeys($users, 'avatar');
-        $followavatars = $this->uploadmodel->getAvatars($followids);
+        //var_dump($follows);
+        
+        $users = $this->usermodel->getlist('*', array('uid'=>  Util::mapKeys($follows, 'targetuid')));
+        //var_dump(Util::mapKeys($follows, 'targetuid'));
         $followlist = array();
-        foreach($follows as $follow)
-        {
-            $followlist[] = array(
-                'id' => $follow['id'],
-                'user' => array(
-                    'uid' => $follow['uid'],
-                    'name' => $follow['name'],
-                    'avatar' => $followavatars[$follow['uid']]
-                    ),
-                'dateline' => $follow['dateline']
-            );
+        if(count($users)){
+            $uids = Util::mapKeys($users, 'uid');
+            $followavatars = $this->uploadmodel->getAvatarByUids ($uids);
+            $followlist = array();
+            foreach($follows as $follow)
+            {
+                $followlist[] = array(
+                    'id' => $follow['id'],
+                    'user' => array(
+                        'uid' => $follow['uid'],
+                        'name' => $follow['name'],
+                        'avatar' => $followavatars[$follow['uid']]
+                        ),
+                    'dateline' => $follow['dateline']
+                );
+            }
         }
         if(count($followlist)){
             return $this->go('follow list', $followlist);
