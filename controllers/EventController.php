@@ -73,10 +73,14 @@ class EventController extends BaseController
             $eventids = Util::mapKeys($marklist, "targetid");
             $events = $this->eventmodel->getlist("*", array('id'=>$eventids));
             $result = array();
-            foreach($events as $event)
+            if(count($events))
             {
-                $result[] = $this->data2model($event);
+                foreach($events as $event)
+                {
+                    $result[] = $this->data2model($event);
+                }
             }
+            
             if(count($result))
             {
                 return $this->go('mark list', $result);
