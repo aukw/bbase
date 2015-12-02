@@ -482,6 +482,36 @@ class InfoController extends BaseController
             return $this->go('people profile certify', $info);
         }
         
+        public function mark()
+        {
+            $info = array(
+                'url' => '/api/@type/@id/marks',
+                'method' => Config::$METHOD_POST,
+                'params' => array(
+                    array('name'=>'@type', 'value'=>'events'),
+                    array('name'=>'@id', 'value'=>'event id'),
+                ),
+                'return' => array(
+                    array('name'=>'结果', 'value'=>'1 成功， 2 不成功'),
+                )
+            );
+            return $this->go('mark ok', $info);
+        }
+        
+        
+        public function marklist()
+        {
+            $info = array(
+                'url' => '/api/marks',
+                'method' => Config::$METHOD_GET,
+                'params' => '',
+                'return' => array(
+                    array('name'=>'结果', 'value'=>'1 活动列表， 2 空列表'),
+                )
+            );
+            return $this->go('mark list', $info);
+        }
+        
 //	public function index()
 //	{
 //		$keywords = $_GET['keywords'];

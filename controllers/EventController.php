@@ -35,6 +35,7 @@ include_once $_SERVER['DOCUMENT_ROOT'].'/models/CommentModel.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/models/UploadModel.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/models/UserModel.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/models/LikeModel.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/models/MarkModel.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/models/FollowModel.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/utils/Location.php';
 
@@ -47,6 +48,7 @@ class EventController extends BaseController
         public $usermodel;
         public $followmodel;
         public $likemodel;
+        public $markmodel;
         
 	public function __construct() {
 		parent::__construct();
@@ -56,6 +58,7 @@ class EventController extends BaseController
                 $this->usermodel = new UserModel();
                 $this->followmodel = new FollowModel();
                 $this->likemodel = new LikeModel();
+                $this->markmodel = new MarkModel();
 	}
 	
 	public function index()
@@ -63,6 +66,28 @@ class EventController extends BaseController
 
 	}
 	
+        
+        public function markList()
+        {
+            $marklist = $this->markmodel->getlist("*", array('uid'=>$this->author['id']));
+            $eventids = Util::mapKeys($marklist, "targetid");
+            $events = $this->eventmodel->getlist("*", array('id'=>$eventids));
+            $result = array();
+            foreach($events as $event)
+            {
+                $result[] = $this->data2model($event);
+            }
+            if(count($result))
+            {
+                return $this->go('mark list', $result);
+            }else{
+                return $this->warn('mark list null');
+            }
+            
+//            var_dump($marklist);
+//            var_dump($eventids);
+        }
+        
 	public function store()
 	{
             $data = $this->parmall();

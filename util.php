@@ -53,10 +53,18 @@ class Util
 //        var_dump($values);
 //        var_dump($keys);
         $result = array();
-        foreach ($keys as $key)
+        if(is_array($keys))
         {
-            if(isset($values[$key])){
-                $result[$key] = $values[$key];
+            foreach ($keys as $key)
+            {
+                if(isset($values[$key])){
+                    $result[$key] = $values[$key];
+                }
+            }
+        }else{
+            foreach($values as $value)
+            {
+                $result[] = $value[$keys];
             }
         }
         return $result;

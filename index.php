@@ -16,6 +16,8 @@ Flight::route('GET /api/@type/@id/comments', function($type, $id){router('Commen
 Flight::route('DELETE /api/comments/@id', function($id){router('CommentController', 'delete', $id);});
 
 Flight::route('POST /api/@type/@id/likes', function($type, $id){router('LikeController', 'store', $type, $id);});
+Flight::route('POST /api/@type/@id/marks', function($type, $id){router('MarkController', 'store', $type, $id);}); 
+Flight::route('GET /api/marks', function(){router('EventController', 'markList');}); 
 
 
 Flight::route('POST /api/events', function(){ router('EventController', 'store');});
