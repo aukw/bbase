@@ -56,7 +56,7 @@ class BaseController extends Base
         }
         $parms = array_merge(array_values((array)(Flight::request()->query))[0], array_values(((array)Flight::request()->data))[0], $putparms);
         
-        return $parms[$key];
+        return urldecode($parms[$key]);
     }
     
     
@@ -74,6 +74,10 @@ class BaseController extends Base
             }
         }
         $parms = array_merge(array_values((array)(Flight::request()->query))[0], array_values(((array)Flight::request()->data))[0], $putparms);
+        foreach ($parms as &$parm)
+        {
+            $parm = urldecode($parm);
+        }
         
         return $parms;
     }
