@@ -6,11 +6,13 @@
             <file>file:/var/www/bb/controllers/EventController.php</file>
             <file>file:/var/www/bb/models/MarkModel.php</file>
             <file>file:/var/www/bb/index.php</file>
+            <file>file:/var/www/bb/controllers/BaseController.php</file>
             <file>file:/var/www/bb/models/EventModel.php</file>
             <file>file:/var/www/bb/controllers/MarkController.php</file>
             <file>file:/var/www/bb/controllers/InfoController.php</file>
             <file>file:/var/www/bb/controllers/FollowController.php</file>
             <file>file:/var/www/bb/util.php</file>
+            <file>file:/var/www/bb/controllers/CommentController.php</file>
             <file>file:/var/www/bb/controllers/LikeController.php</file>
             <file>file:/var/www/bb/controllers/HomeController.php</file>
         </group>

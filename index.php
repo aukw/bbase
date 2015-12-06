@@ -22,6 +22,9 @@ Flight::route('GET /api/marks', function(){router('EventController', 'markList')
 
 Flight::route('POST /api/events', function(){ router('EventController', 'store');});
 Flight::route('GET /api/events', function(){ router('EventController', 'showList');});
+Flight::route('GET /api/myevents', function(){ router('EventController', 'showMyList', $uid=0);});
+Flight::route('GET /api/myevents/@uid', function($uid){ router('EventController', 'showMyList', $uid);});
+
 Flight::route('GET /api/events/@eventid', function($eventid){ router('EventController', 'show', $eventid);});
 Flight::route('DELETE /api/events/@eventid', function($eventid){ router('EventController', 'delete', $eventid);});
 Flight::route('PUT /api/events/@eventid', function($eventid){ router('EventController', 'update', $eventid);});

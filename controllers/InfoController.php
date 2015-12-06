@@ -392,6 +392,7 @@ class InfoController extends BaseController
                     array('name'=>'avatar', 'value'=>'头像'),
                     array('name'=>'follownum', 'value'=>'我的关注人数'),
                     array('name'=>'fannum', 'value'=>'我的粉丝人数'),
+                    array('name'=>'singer', 'value'=>'0:没有提过申请，1:申请正在审核中，2:申请已经通过'),
                 )
             );
             
@@ -510,6 +511,32 @@ class InfoController extends BaseController
                 )
             );
             return $this->go('mark list', $info);
+        }
+        
+        public function myeventlist()
+        {
+            $info = array(
+                'url' => '/api/myevents',
+                'method' => Config::$METHOD_GET,
+                'params' => '',
+                'return' => array(
+                    array('name'=>'结果', 'value'=>'1 活动列表， 2 空列表'),
+                )
+            );
+            return $this->go('event list', $info);
+        }
+        
+        public function youreventlist()
+        {
+            $info = array(
+                'url' => '/api/myevents/@uid',
+                'method' => Config::$METHOD_GET,
+                'params' => '',
+                'return' => array(
+                    array('name'=>'结果', 'value'=>'1 活动列表， 2 空列表'),
+                )
+            );
+            return $this->go('event list', $info);
         }
         
 //	public function index()

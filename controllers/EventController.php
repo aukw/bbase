@@ -146,9 +146,10 @@ class EventController extends BaseController
             return $this->go('event list', $eventlist);
         }
         
-        public function showMyList()
+        public function showMyList($uid=0)
         {
-            $events = $this->eventmodel->getlist('*', array('uid'=>$this->author['id']));
+            $uid = $uid?$uid:$this->author['id'];
+            $events = $this->eventmodel->getlist('*', array('uid'=>$uid));
             $eventlist = array();
             foreach ($events as $event)
             {
