@@ -224,7 +224,7 @@ class EventController extends BaseController
                 'starttime' => $model['starttime'],
                 'endtime' => $model['endtime'],
                 'viewnum' => $model['viewnum']?$model['viewnum']:0,
-                'likenum' => $model['likenum']?$model['viewnum']:0
+                'likenum' => $model['likenum']?$model['likenum']:0
             );
             return $event;
         }

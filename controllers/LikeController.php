@@ -32,34 +32,61 @@
 include_once $_SERVER['DOCUMENT_ROOT'].'/controllers/BaseController.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/models/LikeModel.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/models/UploadModel.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/models/EventModel.php';
 
 
 class LikeController extends BaseController
 {
 	public $likemodel;
         public $uploadmodel;
+        public $eventmodel;
         
 	public function __construct() {
 		parent::__construct();
 		$this->likemodel = new LikeModel();
                 $this->uploadmodel = new UploadModel();
+                $this->eventmodel = new EventModel();
 	}
 		
 	public function store($targettype, $targetid)
 	{
+            //die($targettype." + ". $targetid);
             $status = $this->getLikeStatus($targettype, $targetid);
             if($status)
             {
                 $check = $this->delLike($status);
+                $this->decreLikeNum($targetid);
             }else{
                 $check = $this->addLike($targettype, $targetid);
-            }
+                $this->increLikeNum($targetid);
+            } 
             if($check){
                 return $this->go('like ok', $check);
             }else{
                 return $this->warn('like faild');
             }
 	}
+        
+        private function decreLikeNum($targetid)
+        {
+            $where = array('id' => $targetid);
+            $event = $this->eventmodel->getEntity($where);
+            if($event['likenum'] > 0)
+            {
+                $likeparm = array('likenum' => ($event['likenum']-1));
+                $this->eventmodel->update($likeparm, $where);
+            }
+        }
+        
+        private function increLikeNum($targetid)
+        {
+            $where = array('id' => $targetid);
+            $event = $this->eventmodel->getEntity($where);
+            $likeparm = array('likenum' => ($event['likenum']+1));
+            $this->eventmodel->update($likeparm, $where);
+        }
+        
+        
         
         private function addLike($targettype, $targetid)
         {

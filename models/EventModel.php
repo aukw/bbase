@@ -13,7 +13,7 @@ class EventModel extends BaseModel
         $this->_DB_TABLE_NAME = 'event';
         $this->_MODEL = array('id','poster','title','dateline','content', 
             'contact', 'fee', 'place', 'placecodepo','starttime', 'endtime', 
-            'uid', 'name', 'likenum', 'commentnum', 'location_prov', 
+            'uid', 'name', 'likenum', 'viewnum','commentnum', 'location_prov', 
             'location_city', 'location_detail', 'theme');
         parent::__construct();
       # code...
