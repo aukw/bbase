@@ -117,6 +117,7 @@ class InfoController extends BaseController
                 'params' => array(
                     array('name'=>'title', 'value'=>'活动标题'),
                     array('name'=>'theme', 'value'=>'活动主题'),
+                    array('name'=>'flyimage[0]', 'value'=>'海报'),
                     array('name'=>'content', 'value'=>'活动内容'),
                     array('name'=>'contact', 'value'=>'联系方式'),
                     array('name'=>'fee', 'value'=>'活动费用'),
@@ -129,6 +130,7 @@ class InfoController extends BaseController
                 'return' => array(
                     array('name'=>'id', 'value'=>'活动ID'),
                     array('name'=>'user', 'value'=>'User模型'),
+                    array('name'=>'poster', 'value'=>'海报'),
                     array('name'=>'theme', 'value'=>'活动主题'),
                     array('name'=>'title', 'value'=>'活动标题'),
                     array('name'=>'content', 'value'=>'活动内容'),
